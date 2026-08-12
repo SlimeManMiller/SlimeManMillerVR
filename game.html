@@ -109,7 +109,7 @@
             cursor: pointer;
             transition: transform 0.2s, background 0.2s;
 
-            z-index: 10;
+            z-index: 30;
         }
 
         .back-button:hover {
@@ -117,7 +117,7 @@
             background: #5d6961;
         }
 
-        /* START MENU */
+        /* MENU */
         .menu {
             position: absolute;
             inset: 0;
@@ -132,6 +132,11 @@
             z-index: 20;
         }
 
+        /* GAME OVER MENU */
+        .game-over {
+            background: rgba(10, 15, 10, 0.78);
+        }
+
         .menu-title {
             color: black;
             font-size: 50px;
@@ -139,6 +144,11 @@
             margin-bottom: 35px;
         }
 
+        .game-over .menu-title {
+            color: white;
+        }
+
+        /* START / RESTART */
         .start-button {
             width: 280px;
             height: 120px;
@@ -174,15 +184,16 @@
         <!-- PLAYER -->
         <div class="player" id="player"></div>
 
-        <!-- START MENU -->
+        <!-- MENU -->
         <div class="menu" id="menu">
 
-            <div class="menu-title">
+            <div class="menu-title" id="menuTitle">
                 GAME
             </div>
 
             <button
                 class="start-button"
+                id="startButton"
                 onclick="startGame()"
             >
                 START
@@ -215,17 +226,23 @@
 
         const game = document.getElementById("game");
         const menu = document.getElementById("menu");
+        const menuTitle = document.getElementById("menuTitle");
+        const startButton = document.getElementById("startButton");
 
         let enemies = [];
         let bullets = [];
 
         let gameStarted = false;
-        let enemySpawner;
+        let enemySpawner = null;
 
         /* START GAME */
         function startGame() {
 
+            clearGame();
+
             gameStarted = true;
+
+            menu.classList.remove("game-over");
 
             menu.classList.add("hidden");
 
@@ -243,6 +260,7 @@
 
             enemy.classList.add("enemy");
 
+            /* CENTER */
             const centerY =
                 (game.clientHeight / 2) - 25;
 
@@ -287,72 +305,170 @@
             });
         }
 
+        /* GAME OVER */
+        function gameOver() {
+
+            gameStarted = false;
+
+            clearInterval(enemySpawner);
+
+            enemySpawner = null;
+
+            /* REMOVE EVERYTHING */
+            enemies.forEach(enemy => {
+                enemy.element.remove();
+            });
+
+            bullets.forEach(bullet => {
+                bullet.element.remove();
+            });
+
+            enemies = [];
+            bullets = [];
+
+            /* DARK MENU */
+            menu.classList.remove("hidden");
+
+            menu.classList.add("game-over");
+
+            menuTitle.textContent = "GAME OVER";
+
+            startButton.textContent = "RESTART";
+        }
+
+        /* CLEAR GAME */
+        function clearGame() {
+
+            enemies.forEach(enemy => {
+                enemy.element.remove();
+            });
+
+            bullets.forEach(bullet => {
+                bullet.element.remove();
+            });
+
+            enemies = [];
+            bullets = [];
+        }
+
         /* GAME LOOP */
         function gameLoop() {
 
-            /* MOVE GREEN BOXES */
-            for (let i = enemies.length - 1; i >= 0; i--) {
+            if (gameStarted) {
 
-                const enemy = enemies[i];
+                /* MOVE GREEN BOXES */
+                for (
+                    let i = enemies.length - 1;
+                    i >= 0;
+                    i--
+                ) {
 
-                enemy.x -= 4;
+                    const enemy = enemies[i];
 
-                enemy.element.style.left =
-                    enemy.x + "px";
+                    enemy.x -= 4;
 
-                /* REMOVE AT LEFT */
-                if (enemy.x < -60) {
+                    enemy.element.style.left =
+                        enemy.x + "px";
 
-                    enemy.element.remove();
-
-                    enemies.splice(i, 1);
-                }
-            }
-
-            /* MOVE BULLETS */
-            for (let i = bullets.length - 1; i >= 0; i--) {
-
-                const bullet = bullets[i];
-
-                bullet.x += 8;
-
-                bullet.element.style.left =
-                    bullet.x + "px";
-
-                /* REMOVE AT RIGHT */
-                if (bullet.x > game.clientWidth) {
-
-                    bullet.element.remove();
-
-                    bullets.splice(i, 1);
-                }
-            }
-
-            /* COLLISIONS */
-            for (let b = bullets.length - 1; b >= 0; b--) {
-
-                for (let e = enemies.length - 1; e >= 0; e--) {
-
-                    const bulletRect =
-                        bullets[b].element.getBoundingClientRect();
+                    /* PLAYER COLLISION */
+                    const playerRect =
+                        document
+                            .getElementById("player")
+                            .getBoundingClientRect();
 
                     const enemyRect =
-                        enemies[e].element.getBoundingClientRect();
+                        enemy.element.getBoundingClientRect();
 
                     if (
-                        bulletRect.left < enemyRect.right &&
-                        bulletRect.right > enemyRect.left &&
-                        bulletRect.top < enemyRect.bottom &&
-                        bulletRect.bottom > enemyRect.top
+                        playerRect.left < enemyRect.right &&
+                        playerRect.right > enemyRect.left &&
+                        playerRect.top < enemyRect.bottom &&
+                        playerRect.bottom > enemyRect.top
                     ) {
 
-                        enemies[e].element.remove();
-                        bullets[b].element.remove();
-
-                        enemies.splice(e, 1);
-                        bullets.splice(b, 1);
+                        gameOver();
 
                         break;
+                    }
+
+                    /* REMOVE AT LEFT */
+                    if (enemy.x < -60) {
+
+                        enemy.element.remove();
+
+                        enemies.splice(i, 1);
+                    }
+                }
+
+                /* MOVE BULLETS */
+                for (
+                    let i = bullets.length - 1;
+                    i >= 0;
+                    i--
+                ) {
+
+                    const bullet = bullets[i];
+
+                    bullet.x += 8;
+
+                    bullet.element.style.left =
+                        bullet.x + "px";
+
+                    /* REMOVE AT RIGHT */
+                    if (bullet.x > game.clientWidth) {
+
+                        bullet.element.remove();
+
+                        bullets.splice(i, 1);
+                    }
+                }
+
+                /* BULLET COLLISIONS */
+                for (
+                    let b = bullets.length - 1;
+                    b >= 0;
+                    b--
+                ) {
+
+                    let bulletDestroyed = false;
+
+                    for (
+                        let e = enemies.length - 1;
+                        e >= 0;
+                        e--
+                    ) {
+
+                        const bulletRect =
+                            bullets[b].element
+                                .getBoundingClientRect();
+
+                        const enemyRect =
+                            enemies[e].element
+                                .getBoundingClientRect();
+
+                        if (
+                            bulletRect.left < enemyRect.right &&
+                            bulletRect.right > enemyRect.left &&
+                            bulletRect.top < enemyRect.bottom &&
+                            bulletRect.bottom > enemyRect.top
+                        ) {
+
+                            enemies[e].element.remove();
+
+                            bullets[b].element.remove();
+
+                            enemies.splice(e, 1);
+
+                            bullets.splice(b, 1);
+
+                            bulletDestroyed = true;
+
+                            break;
+                        }
+                    }
+
+                    if (bulletDestroyed) {
+                        continue;
                     }
                 }
             }
