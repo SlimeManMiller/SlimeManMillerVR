@@ -10,11 +10,17 @@
             box-sizing: border-box;
         }
 
+        html {
+            min-height: 105%;
+        }
+
         body {
             margin: 0;
+            min-height: 105vh;
             background: #5f9f55;
             font-family: Arial, sans-serif;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
         }
 
         /* GAME AREA */
@@ -88,8 +94,8 @@
         /* BACK BUTTON */
         .back-button {
             position: absolute;
-            left: 20px;
-            bottom: 20px;
+            left: 10px;
+            bottom: 10px;
 
             width: 150px;
             height: 60px;
