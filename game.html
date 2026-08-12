@@ -63,6 +63,19 @@
         .kills {
             position: absolute;
             top: 20px;
+            left: 25px;
+
+            color: black;
+            font-size: 28px;
+            font-weight: bold;
+
+            z-index: 10;
+        }
+
+        /* STREAK */
+        .streak {
+            position: absolute;
+            top: 20px;
             right: 25px;
 
             color: black;
@@ -216,6 +229,11 @@
             KILLS: 0
         </div>
 
+        <!-- STREAK -->
+        <div class="streak" id="streak">
+            STREAK: 0
+        </div>
+
         <!-- PLAYER -->
         <div class="player" id="player"></div>
 
@@ -268,7 +286,9 @@
         const menu = document.getElementById("menu");
         const menuTitle = document.getElementById("menuTitle");
         const startButton = document.getElementById("startButton");
+
         const killsText = document.getElementById("kills");
+        const streakText = document.getElementById("streak");
 
         let enemies = [];
         let bullets = [];
@@ -276,16 +296,25 @@
         let gameStarted = false;
         let enemySpawner = null;
 
-        /* LOAD KILLS */
+        /* LOAD PERMANENT KILLS */
         let kills = Number(
             localStorage.getItem("slimeManMillerKills") || 0
         );
 
-        killsText.textContent = "KILLS: " + kills;
+        /* STREAK ALWAYS STARTS AT 0 */
+        let streak = 0;
+
+        killsText.textContent =
+            "KILLS: " + kills;
+
+        streakText.textContent =
+            "STREAK: " + streak;
+
 
         /* ADD KILL */
         function addKill() {
 
+            /* PERMANENT KILLS */
             kills++;
 
             killsText.textContent =
@@ -295,12 +324,32 @@
                 "slimeManMillerKills",
                 kills
             );
+
+            /* CURRENT STREAK */
+            streak++;
+
+            streakText.textContent =
+                "STREAK: " + streak;
         }
+
+
+        /* RESET STREAK */
+        function resetStreak() {
+
+            streak = 0;
+
+            streakText.textContent =
+                "STREAK: 0";
+        }
+
 
         /* START GAME */
         function startGame() {
 
             clearGame();
+
+            /* RESET STREAK WHEN STARTING / RESTARTING */
+            resetStreak();
 
             gameStarted = true;
 
@@ -311,6 +360,7 @@
                 createEnemy();
             }, 1000);
         }
+
 
         /* CREATE GREEN BOX */
         function createEnemy() {
@@ -339,6 +389,7 @@
             });
         }
 
+
         /* SHOOT */
         function shoot() {
 
@@ -365,6 +416,7 @@
             });
         }
 
+
         /* GAME OVER */
         function gameOver() {
 
@@ -385,12 +437,20 @@
             enemies = [];
             bullets = [];
 
+            /* RESET STREAK */
+            resetStreak();
+
+            /* SHOW GAME OVER */
             menu.classList.remove("hidden");
             menu.classList.add("game-over");
 
-            menuTitle.textContent = "GAME OVER";
-            startButton.textContent = "RESTART";
+            menuTitle.textContent =
+                "GAME OVER";
+
+            startButton.textContent =
+                "RESTART";
         }
+
 
         /* CLEAR GAME */
         function clearGame() {
@@ -406,6 +466,7 @@
             enemies = [];
             bullets = [];
         }
+
 
         /* GAME LOOP */
         function gameLoop() {
@@ -426,6 +487,7 @@
                     enemy.element.style.left =
                         enemy.x + "px";
 
+
                     /* PLAYER COLLISION */
                     const playerRect =
                         document
@@ -436,6 +498,7 @@
                         enemy.element
                             .getBoundingClientRect();
 
+
                     if (
                         playerRect.left < enemyRect.right &&
                         playerRect.right > enemyRect.left &&
@@ -444,8 +507,10 @@
                     ) {
 
                         gameOver();
+
                         break;
                     }
+
 
                     /* REMOVE AT LEFT */
                     if (enemy.x < -60) {
@@ -455,6 +520,7 @@
                         enemies.splice(i, 1);
                     }
                 }
+
 
                 /* MOVE BULLETS */
                 for (
@@ -470,6 +536,7 @@
                     bullet.element.style.left =
                         bullet.x + "px";
 
+
                     if (bullet.x > game.clientWidth) {
 
                         bullet.element.remove();
@@ -477,6 +544,7 @@
                         bullets.splice(i, 1);
                     }
                 }
+
 
                 /* BULLET COLLISIONS */
                 for (
@@ -499,6 +567,7 @@
                             enemies[e].element
                                 .getBoundingClientRect();
 
+
                         if (
                             bulletRect.left < enemyRect.right &&
                             bulletRect.right > enemyRect.left &&
@@ -515,7 +584,7 @@
                             enemies.splice(e, 1);
                             bullets.splice(b, 1);
 
-                            /* +1 KILL */
+                            /* KILL +1 */
                             addKill();
 
                             break;
@@ -526,6 +595,7 @@
 
             requestAnimationFrame(gameLoop);
         }
+
 
         /* START LOOP */
         gameLoop();
