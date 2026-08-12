@@ -59,6 +59,19 @@
             background: #ffd900;
         }
 
+        /* KILLS */
+        .kills {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+
+            color: black;
+            font-size: 28px;
+            font-weight: bold;
+
+            z-index: 10;
+        }
+
         /* CONTROLS */
         .controls {
             position: relative;
@@ -198,6 +211,12 @@
     <!-- GAME -->
     <div class="game" id="game">
 
+        <!-- KILLS -->
+        <div class="kills" id="kills">
+            KILLS: 0
+        </div>
+
+        <!-- PLAYER -->
         <div class="player" id="player"></div>
 
         <!-- START / GAME OVER MENU -->
@@ -222,6 +241,7 @@
     <!-- CONTROLS -->
     <div class="controls">
 
+        <!-- SHOOT -->
         <button
             class="shoot-button"
             onclick="shoot()"
@@ -232,6 +252,7 @@
     <!-- BOTTOM -->
     <div class="bottom">
 
+        <!-- BACK -->
         <a
             class="back-button"
             href="index.html"
@@ -247,12 +268,34 @@
         const menu = document.getElementById("menu");
         const menuTitle = document.getElementById("menuTitle");
         const startButton = document.getElementById("startButton");
+        const killsText = document.getElementById("kills");
 
         let enemies = [];
         let bullets = [];
 
         let gameStarted = false;
         let enemySpawner = null;
+
+        /* LOAD KILLS */
+        let kills = Number(
+            localStorage.getItem("slimeManMillerKills") || 0
+        );
+
+        killsText.textContent = "KILLS: " + kills;
+
+        /* ADD KILL */
+        function addKill() {
+
+            kills++;
+
+            killsText.textContent =
+                "KILLS: " + kills;
+
+            localStorage.setItem(
+                "slimeManMillerKills",
+                kills
+            );
+        }
 
         /* START GAME */
         function startGame() {
@@ -463,11 +506,17 @@
                             bulletRect.bottom > enemyRect.top
                         ) {
 
+                            /* REMOVE ENEMY */
                             enemies[e].element.remove();
+
+                            /* REMOVE BULLET */
                             bullets[b].element.remove();
 
                             enemies.splice(e, 1);
                             bullets.splice(b, 1);
+
+                            /* +1 KILL */
+                            addKill();
 
                             break;
                         }
