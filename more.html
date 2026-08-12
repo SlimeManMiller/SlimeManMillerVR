@@ -88,14 +88,16 @@
             opacity: 0.7;
         }
 
-        /* ALL VIDS */
-        .all-vids-container {
+        /* ALL VIDS + GAME */
+        .extra-buttons {
             margin-top: 80px;
             display: flex;
-            justify-content: flex-start;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 25px;
         }
 
-        .all-vids-button {
+        .extra-button {
             width: 280px;
             height: 140px;
             background: #4f5a52;
@@ -114,7 +116,7 @@
             transition: transform 0.2s, background 0.2s;
         }
 
-        .all-vids-button:hover {
+        .extra-button:hover {
             transform: scale(1.05);
             background: #5d6961;
         }
@@ -259,14 +261,25 @@
             </div>
         </div>
 
-        <!-- ALL VIDS -->
-        <div class="all-vids-container">
+        <!-- ALL VIDS + GAME -->
+        <div class="extra-buttons">
+
+            <!-- ALL VIDS -->
             <a
-                class="all-vids-button"
+                class="extra-button"
                 href="allvids.html"
             >
                 ALL VIDS
             </a>
+
+            <!-- GAME -->
+            <a
+                class="extra-button"
+                href="game.html"
+            >
+                GAME
+            </a>
+
         </div>
 
     </div>
