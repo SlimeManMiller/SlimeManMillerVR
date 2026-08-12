@@ -68,16 +68,16 @@
             background: #286b32;
         }
 
-        /* EXTRA DARK GREEN BOTTOM */
+        /* BOTTOM */
         .bottom {
             width: 100%;
             height: 15vh;
             min-height: 120px;
-            background: #205f2c;
+            background: #286b32;
             position: relative;
         }
 
-        /* EMPTY SHOOT BUTTON */
+        /* SHOOT BUTTON */
         .shoot-button {
             position: absolute;
             left: 50%;
@@ -161,7 +161,6 @@
             margin-bottom: 35px;
         }
 
-        /* GAME OVER TEXT */
         .game-over .menu-title {
             color: black;
         }
@@ -199,10 +198,9 @@
     <!-- GAME -->
     <div class="game" id="game">
 
-        <!-- PLAYER -->
         <div class="player" id="player"></div>
 
-        <!-- MENU -->
+        <!-- START / GAME OVER MENU -->
         <div class="menu" id="menu">
 
             <div class="menu-title" id="menuTitle">
@@ -224,7 +222,6 @@
     <!-- CONTROLS -->
     <div class="controls">
 
-        <!-- EMPTY SHOOT BUTTON -->
         <button
             class="shoot-button"
             onclick="shoot()"
@@ -235,7 +232,6 @@
     <!-- BOTTOM -->
     <div class="bottom">
 
-        <!-- BACK -->
         <a
             class="back-button"
             href="index.html"
@@ -266,7 +262,6 @@
             gameStarted = true;
 
             menu.classList.remove("game-over");
-
             menu.classList.add("hidden");
 
             enemySpawner = setInterval(() => {
@@ -348,11 +343,9 @@
             bullets = [];
 
             menu.classList.remove("hidden");
-
             menu.classList.add("game-over");
 
             menuTitle.textContent = "GAME OVER";
-
             startButton.textContent = "RESTART";
         }
 
@@ -376,7 +369,7 @@
 
             if (gameStarted) {
 
-                /* MOVE GREEN BOXES */
+                /* MOVE ENEMIES */
                 for (
                     let i = enemies.length - 1;
                     i >= 0;
@@ -397,7 +390,8 @@
                             .getBoundingClientRect();
 
                     const enemyRect =
-                        enemy.element.getBoundingClientRect();
+                        enemy.element
+                            .getBoundingClientRect();
 
                     if (
                         playerRect.left < enemyRect.right &&
@@ -407,7 +401,6 @@
                     ) {
 
                         gameOver();
-
                         break;
                     }
 
@@ -449,8 +442,6 @@
                     b--
                 ) {
 
-                    let bulletDestroyed = false;
-
                     for (
                         let e = enemies.length - 1;
                         e >= 0;
@@ -473,21 +464,13 @@
                         ) {
 
                             enemies[e].element.remove();
-
                             bullets[b].element.remove();
 
                             enemies.splice(e, 1);
-
                             bullets.splice(b, 1);
-
-                            bulletDestroyed = true;
 
                             break;
                         }
-                    }
-
-                    if (bulletDestroyed) {
-                        continue;
                     }
                 }
             }
