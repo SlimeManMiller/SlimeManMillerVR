@@ -1,9 +1,87 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>More</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>More - SlimeManMillerVR</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #5f9f55;
+        }
+
+        /* TOP */
+        .top {
+            height: 35vh;
+            background: linear-gradient(
+                to bottom,
+                #205f2c 0%,
+                #286b32 25%,
+                #3f833f 55%,
+                #5f9f55 100%
+            );
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .title {
+            color: black;
+            font-size: 42px;
+            font-weight: bold;
+        }
+
+        /* CONTENT */
+        .content {
+            min-height: 30vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 70px 0;
+        }
+
+        .videos {
+            color: black;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        /* BOTTOM */
+        .bottom {
+            height: 35vh;
+            background: linear-gradient(
+                to bottom,
+                #5f9f55 0%,
+                #3f833f 45%,
+                #286b32 75%,
+                #205f2c 100%
+            );
+        }
+    </style>
 </head>
+
 <body>
-    <h1>MORE</h1>
+
+    <!-- TOP -->
+    <div class="top">
+        <div class="title">MORE</div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+        <div class="videos">VIDEOS:</div>
+    </div>
+
+    <!-- BOTTOM -->
+    <div class="bottom"></div>
+
 </body>
 </html>
