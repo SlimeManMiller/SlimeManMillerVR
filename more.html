@@ -10,9 +10,13 @@
             box-sizing: border-box;
         }
 
+        html {
+            min-height: 100%;
+        }
+
         body {
             margin: 0;
-            min-height: 100vh;
+            min-height: 300vh;
             font-family: Arial, sans-serif;
             background: #5f9f55;
         }
@@ -20,6 +24,8 @@
         /* TOP */
         .top {
             height: 35vh;
+            min-height: 300px;
+
             background: linear-gradient(
                 to bottom,
                 #205f2c 0%,
@@ -41,22 +47,22 @@
 
         /* CONTENT */
         .content {
-            min-height: 30vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 70px 0;
+            min-height: 230vh;
+            padding: 50px 40px;
         }
 
         .videos {
             color: black;
             font-size: 32px;
             font-weight: bold;
+            text-align: left;
         }
 
         /* BOTTOM */
         .bottom {
             height: 35vh;
+            min-height: 300px;
+
             background: linear-gradient(
                 to bottom,
                 #5f9f55 0%,
