@@ -22,7 +22,7 @@
             position: relative;
             width: 100vw;
             height: 85vh;
-            background: #5f9f55;
+            background: #4f8748;
             overflow: hidden;
         }
 
@@ -33,7 +33,7 @@
             top: 50%;
             width: 60px;
             height: 60px;
-            background: #4f5551;
+            background: #777d79;
             transform: translateY(-50%);
         }
 
@@ -116,6 +116,53 @@
             transform: scale(1.05);
             background: #5d6961;
         }
+
+        /* START MENU */
+        .menu {
+            position: absolute;
+            inset: 0;
+
+            background: rgba(20, 35, 20, 0.55);
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            z-index: 20;
+        }
+
+        .menu-title {
+            color: black;
+            font-size: 50px;
+            font-weight: bold;
+            margin-bottom: 35px;
+        }
+
+        .start-button {
+            width: 280px;
+            height: 120px;
+
+            background: #4f5a52;
+            border: none;
+            border-radius: 15px;
+
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .start-button:hover {
+            background: #5d6961;
+            transform: scale(1.05);
+        }
+
+        /* HIDDEN */
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 
@@ -126,6 +173,22 @@
 
         <!-- PLAYER -->
         <div class="player" id="player"></div>
+
+        <!-- START MENU -->
+        <div class="menu" id="menu">
+
+            <div class="menu-title">
+                GAME
+            </div>
+
+            <button
+                class="start-button"
+                onclick="startGame()"
+            >
+                START
+            </button>
+
+        </div>
 
     </div>
 
@@ -151,12 +214,30 @@
     <script>
 
         const game = document.getElementById("game");
+        const menu = document.getElementById("menu");
 
         let enemies = [];
         let bullets = [];
 
+        let gameStarted = false;
+        let enemySpawner;
+
+        /* START GAME */
+        function startGame() {
+
+            gameStarted = true;
+
+            menu.classList.add("hidden");
+
+            enemySpawner = setInterval(() => {
+                createEnemy();
+            }, 1000);
+        }
+
         /* CREATE GREEN BOX */
         function createEnemy() {
+
+            if (!gameStarted) return;
 
             const enemy = document.createElement("div");
 
@@ -183,6 +264,8 @@
         /* SHOOT */
         function shoot() {
 
+            if (!gameStarted) return;
+
             const bullet = document.createElement("div");
 
             bullet.classList.add("bullet");
@@ -207,8 +290,10 @@
         /* GAME LOOP */
         function gameLoop() {
 
-            /* MOVE GREEN BOXES LEFT */
-            enemies.forEach((enemy, index) => {
+            /* MOVE GREEN BOXES */
+            for (let i = enemies.length - 1; i >= 0; i--) {
+
+                const enemy = enemies[i];
 
                 enemy.x -= 4;
 
@@ -220,12 +305,14 @@
 
                     enemy.element.remove();
 
-                    enemies.splice(index, 1);
+                    enemies.splice(i, 1);
                 }
-            });
+            }
 
-            /* MOVE YELLOW BULLETS RIGHT */
-            bullets.forEach((bullet, index) => {
+            /* MOVE BULLETS */
+            for (let i = bullets.length - 1; i >= 0; i--) {
+
+                const bullet = bullets[i];
 
                 bullet.x += 8;
 
@@ -237,9 +324,9 @@
 
                     bullet.element.remove();
 
-                    bullets.splice(index, 1);
+                    bullets.splice(i, 1);
                 }
-            });
+            }
 
             /* COLLISIONS */
             for (let b = bullets.length - 1; b >= 0; b--) {
@@ -259,10 +346,7 @@
                         bulletRect.bottom > enemyRect.top
                     ) {
 
-                        /* DELETE GREEN BOX */
                         enemies[e].element.remove();
-
-                        /* DELETE BULLET */
                         bullets[b].element.remove();
 
                         enemies.splice(e, 1);
@@ -276,12 +360,7 @@
             requestAnimationFrame(gameLoop);
         }
 
-        /* SPAWN GREEN BOXES */
-        setInterval(() => {
-            createEnemy();
-        }, 1000);
-
-        /* START */
+        /* START LOOP */
         gameLoop();
 
     </script>
