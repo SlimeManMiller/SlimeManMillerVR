@@ -37,7 +37,7 @@
             transform: translateY(-50%);
         }
 
-        /* ENEMIES */
+        /* GREEN BOXES */
         .enemy {
             position: absolute;
             width: 50px;
@@ -45,7 +45,7 @@
             background: #8fd18a;
         }
 
-        /* BULLETS */
+        /* YELLOW BULLETS */
         .bullet {
             position: absolute;
             width: 35px;
@@ -53,20 +53,26 @@
             background: #ffd900;
         }
 
-        /* EMPTY BUTTON */
+        /* CONTROLS */
         .controls {
+            position: relative;
             height: 15vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             background: #286b32;
         }
 
+        /* EMPTY SHOOT BUTTON */
         .shoot-button {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+
             width: 220px;
             height: 80px;
+
             border: none;
             border-radius: 15px;
+
             background: #4f5a52;
             cursor: pointer;
         }
@@ -76,7 +82,39 @@
         }
 
         .shoot-button:active {
-            transform: scale(0.95);
+            transform: translate(-50%, -50%) scale(0.95);
+        }
+
+        /* BACK BUTTON */
+        .back-button {
+            position: absolute;
+            left: 20px;
+            bottom: 20px;
+
+            width: 150px;
+            height: 60px;
+
+            background: #4f5a52;
+            border-radius: 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            text-decoration: none;
+
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+
+            z-index: 10;
+        }
+
+        .back-button:hover {
+            transform: scale(1.05);
+            background: #5d6961;
         }
     </style>
 </head>
@@ -91,12 +129,23 @@
 
     </div>
 
-    <!-- EMPTY BUTTON -->
+    <!-- CONTROLS -->
     <div class="controls">
+
+        <!-- EMPTY SHOOT BUTTON -->
         <button
             class="shoot-button"
             onclick="shoot()"
         ></button>
+
+        <!-- BACK -->
+        <a
+            class="back-button"
+            href="index.html"
+        >
+            BACK
+        </a>
+
     </div>
 
     <script>
@@ -106,26 +155,28 @@
         let enemies = [];
         let bullets = [];
 
-        /* CREATE ENEMY */
+        /* CREATE GREEN BOX */
         function createEnemy() {
 
             const enemy = document.createElement("div");
 
             enemy.classList.add("enemy");
 
-            const maxHeight = game.clientHeight - 50;
+            const centerY =
+                (game.clientHeight / 2) - 25;
 
-            enemy.style.left = game.clientWidth + "px";
+            enemy.style.left =
+                game.clientWidth + "px";
 
             enemy.style.top =
-                Math.random() * maxHeight + "px";
+                centerY + "px";
 
             game.appendChild(enemy);
 
             enemies.push({
                 element: enemy,
                 x: game.clientWidth,
-                y: parseFloat(enemy.style.top)
+                y: centerY
             });
         }
 
@@ -156,7 +207,7 @@
         /* GAME LOOP */
         function gameLoop() {
 
-            /* MOVE ENEMIES */
+            /* MOVE GREEN BOXES LEFT */
             enemies.forEach((enemy, index) => {
 
                 enemy.x -= 4;
@@ -164,7 +215,7 @@
                 enemy.element.style.left =
                     enemy.x + "px";
 
-                /* REMOVE WHEN LEFT */
+                /* REMOVE AT LEFT */
                 if (enemy.x < -60) {
 
                     enemy.element.remove();
@@ -173,7 +224,7 @@
                 }
             });
 
-            /* MOVE BULLETS */
+            /* MOVE YELLOW BULLETS RIGHT */
             bullets.forEach((bullet, index) => {
 
                 bullet.x += 8;
@@ -181,7 +232,7 @@
                 bullet.element.style.left =
                     bullet.x + "px";
 
-                /* REMOVE WHEN RIGHT */
+                /* REMOVE AT RIGHT */
                 if (bullet.x > game.clientWidth) {
 
                     bullet.element.remove();
@@ -191,15 +242,15 @@
             });
 
             /* COLLISIONS */
-            bullets.forEach((bullet, bulletIndex) => {
+            for (let b = bullets.length - 1; b >= 0; b--) {
 
-                enemies.forEach((enemy, enemyIndex) => {
+                for (let e = enemies.length - 1; e >= 0; e--) {
 
                     const bulletRect =
-                        bullet.element.getBoundingClientRect();
+                        bullets[b].element.getBoundingClientRect();
 
                     const enemyRect =
-                        enemy.element.getBoundingClientRect();
+                        enemies[e].element.getBoundingClientRect();
 
                     if (
                         bulletRect.left < enemyRect.right &&
@@ -208,33 +259,29 @@
                         bulletRect.bottom > enemyRect.top
                     ) {
 
-                        enemy.element.remove();
-                        bullet.element.remove();
+                        /* DELETE GREEN BOX */
+                        enemies[e].element.remove();
 
-                        enemies.splice(
-                            enemyIndex,
-                            1
-                        );
+                        /* DELETE BULLET */
+                        bullets[b].element.remove();
 
-                        bullets.splice(
-                            bulletIndex,
-                            1
-                        );
+                        enemies.splice(e, 1);
+                        bullets.splice(b, 1);
+
+                        break;
                     }
-
-                });
-
-            });
+                }
+            }
 
             requestAnimationFrame(gameLoop);
         }
 
-        /* SPAWN ENEMIES */
+        /* SPAWN GREEN BOXES */
         setInterval(() => {
             createEnemy();
         }, 1000);
 
-        /* START GAME */
+        /* START */
         gameLoop();
 
     </script>
