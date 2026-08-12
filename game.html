@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game - SlimeManMillerVR</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #5f9f55;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        /* GAME AREA */
+        .game {
+            position: relative;
+            width: 100vw;
+            height: 85vh;
+            background: #5f9f55;
+            overflow: hidden;
+        }
+
+        /* PLAYER */
+        .player {
+            position: absolute;
+            left: 100px;
+            top: 50%;
+            width: 60px;
+            height: 60px;
+            background: #4f5551;
+            transform: translateY(-50%);
+        }
+
+        /* ENEMIES */
+        .enemy {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: #8fd18a;
+        }
+
+        /* BULLETS */
+        .bullet {
+            position: absolute;
+            width: 35px;
+            height: 12px;
+            background: #ffd900;
+        }
+
+        /* EMPTY BUTTON */
+        .controls {
+            height: 15vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #286b32;
+        }
+
+        .shoot-button {
+            width: 220px;
+            height: 80px;
+            border: none;
+            border-radius: 15px;
+            background: #4f5a52;
+            cursor: pointer;
+        }
+
+        .shoot-button:hover {
+            background: #5d6961;
+        }
+
+        .shoot-button:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- GAME -->
+    <div class="game" id="game">
+
+        <!-- PLAYER -->
+        <div class="player" id="player"></div>
+
+    </div>
+
+    <!-- EMPTY BUTTON -->
+    <div class="controls">
+        <button
+            class="shoot-button"
+            onclick="shoot()"
+        ></button>
+    </div>
+
+    <script>
+
+        const game = document.getElementById("game");
+
+        let enemies = [];
+        let bullets = [];
+
+        /* CREATE ENEMY */
+        function createEnemy() {
+
+            const enemy = document.createElement("div");
+
+            enemy.classList.add("enemy");
+
+            const maxHeight = game.clientHeight - 50;
+
+            enemy.style.left = game.clientWidth + "px";
+
+            enemy.style.top =
+                Math.random() * maxHeight + "px";
+
+            game.appendChild(enemy);
+
+            enemies.push({
+                element: enemy,
+                x: game.clientWidth,
+                y: parseFloat(enemy.style.top)
+            });
+        }
+
+        /* SHOOT */
+        function shoot() {
+
+            const bullet = document.createElement("div");
+
+            bullet.classList.add("bullet");
+
+            const playerX = 100 + 60;
+
+            bullet.style.left =
+                playerX + "px";
+
+            bullet.style.top =
+                (game.clientHeight / 2 - 6) + "px";
+
+            game.appendChild(bullet);
+
+            bullets.push({
+                element: bullet,
+                x: playerX,
+                y: game.clientHeight / 2 - 6
+            });
+        }
+
+        /* GAME LOOP */
+        function gameLoop() {
+
+            /* MOVE ENEMIES */
+            enemies.forEach((enemy, index) => {
+
+                enemy.x -= 4;
+
+                enemy.element.style.left =
+                    enemy.x + "px";
+
+                /* REMOVE WHEN LEFT */
+                if (enemy.x < -60) {
+
+                    enemy.element.remove();
+
+                    enemies.splice(index, 1);
+                }
+            });
+
+            /* MOVE BULLETS */
+            bullets.forEach((bullet, index) => {
+
+                bullet.x += 8;
+
+                bullet.element.style.left =
+                    bullet.x + "px";
+
+                /* REMOVE WHEN RIGHT */
+                if (bullet.x > game.clientWidth) {
+
+                    bullet.element.remove();
+
+                    bullets.splice(index, 1);
+                }
+            });
+
+            /* COLLISIONS */
+            bullets.forEach((bullet, bulletIndex) => {
+
+                enemies.forEach((enemy, enemyIndex) => {
+
+                    const bulletRect =
+                        bullet.element.getBoundingClientRect();
+
+                    const enemyRect =
+                        enemy.element.getBoundingClientRect();
+
+                    if (
+                        bulletRect.left < enemyRect.right &&
+                        bulletRect.right > enemyRect.left &&
+                        bulletRect.top < enemyRect.bottom &&
+                        bulletRect.bottom > enemyRect.top
+                    ) {
+
+                        enemy.element.remove();
+                        bullet.element.remove();
+
+                        enemies.splice(
+                            enemyIndex,
+                            1
+                        );
+
+                        bullets.splice(
+                            bulletIndex,
+                            1
+                        );
+                    }
+
+                });
+
+            });
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        /* SPAWN ENEMIES */
+        setInterval(() => {
+            createEnemy();
+        }, 1000);
+
+        /* START GAME */
+        gameLoop();
+
+    </script>
+
+</body>
+</html>
