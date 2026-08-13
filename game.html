@@ -57,7 +57,7 @@
             background: #8fd18a;
         }
 
-        /* YELLOW BULLETS */
+        /* NORMAL BULLET */
         .bullet {
             position: absolute;
             width: 35px;
@@ -65,16 +65,19 @@
             background: #ffd900;
         }
 
+        /* RED BULLET AT 25+ STREAK */
+        .bullet.high-streak {
+            background: #8b1e1e;
+        }
+
         /* KILLS */
         .kills {
             position: absolute;
             top: 20px;
             left: 25px;
-
             color: black;
             font-size: 28px;
             font-weight: bold;
-
             z-index: 10;
         }
 
@@ -83,15 +86,13 @@
             position: absolute;
             top: 20px;
             right: 25px;
-
             color: black;
             font-size: 28px;
             font-weight: bold;
-
             z-index: 10;
         }
 
-        /* RED STREAK */
+        /* RED STREAK AT 25+ */
         .streak.high-streak {
             color: red;
         }
@@ -346,9 +347,13 @@
             /* 25+ STREAK */
             if (streak >= 25) {
 
-                streakText.classList.add("high-streak");
+                streakText.classList.add(
+                    "high-streak"
+                );
 
-                player.classList.add("high-streak");
+                player.classList.add(
+                    "high-streak"
+                );
             }
         }
 
@@ -376,7 +381,7 @@
 
             clearGame();
 
-            /* RESET STREAK ON START / RESTART */
+            /* RESET STREAK */
             resetStreak();
 
             gameStarted = true;
@@ -433,6 +438,14 @@
                 document.createElement("div");
 
             bullet.classList.add("bullet");
+
+            /* 25+ STREAK = RED BULLET */
+            if (streak >= 25) {
+
+                bullet.classList.add(
+                    "high-streak"
+                );
+            }
 
             const playerX =
                 100 + 60;
@@ -636,7 +649,7 @@
                             enemies.splice(e, 1);
                             bullets.splice(b, 1);
 
-                            /* KILL +1 AND STREAK +1 */
+                            /* KILL +1 / STREAK +1 */
                             addKill();
 
                             break;
