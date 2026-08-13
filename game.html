@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +24,6 @@
             overflow-y: auto;
         }
 
-        /* GAME AREA */
         .game {
             position: relative;
             width: 100vw;
@@ -44,7 +44,6 @@
             transition: background 0.2s;
         }
 
-        /* PLAYER AT 25+ STREAK */
         .player.high-streak {
             background: #b85f5f;
         }
@@ -54,7 +53,6 @@
             background: red !important;
         }
 
-        /* BLACK X */
         .player.secret-code::before,
         .player.secret-code::after {
             content: "";
@@ -80,7 +78,7 @@
             background: #54206f !important;
         }
 
-        /* GREEN BOXES */
+        /* ENEMIES */
         .enemy {
             position: absolute;
             width: 50px;
@@ -89,7 +87,7 @@
             transform: translateY(-50%);
         }
 
-        /* NORMAL BULLET */
+        /* BULLETS */
         .bullet {
             position: absolute;
             width: 35px;
@@ -97,7 +95,6 @@
             background: #ffd900;
         }
 
-        /* RED BULLET AT 25+ STREAK */
         .bullet.high-streak {
             background: #8b1e1e;
         }
@@ -124,7 +121,6 @@
             z-index: 10;
         }
 
-        /* 25+ STREAK */
         .streak.high-streak {
             color: red;
         }
@@ -143,20 +139,15 @@
             gap: 15px;
         }
 
-        /* UP / DOWN BUTTONS */
         .control-button {
             width: 80px;
             height: 80px;
-
             border: none;
             border-radius: 12px;
-
             background: #4f5a52;
-
             color: white;
             font-size: 35px;
             font-weight: bold;
-
             cursor: pointer;
             user-select: none;
 
@@ -173,7 +164,6 @@
             transform: scale(0.92);
         }
 
-        /* SHOOT BUTTON */
         .shoot-button {
             width: 220px;
             height: 80px;
@@ -244,7 +234,7 @@
             transform: scale(0.92);
         }
 
-        /* 500 KILLS MENU BUTTON */
+        /* MENU BUTTON */
         .menu-button {
             position: absolute;
             top: 20px;
@@ -317,12 +307,12 @@
             position: relative;
         }
 
-        /* FIRST UNLOCKED SKIN */
+        /* BLUE 500 KILLS SKIN */
         .skin-blue {
             background: #00a8f3;
         }
 
-        /* OTHER LOCKED SKINS */
+        /* LOCKED SKINS */
         .skin-locked {
             background: #3d4140;
             cursor: not-allowed;
@@ -357,7 +347,6 @@
             font-weight: bold;
         }
 
-        /* BACK FROM SKIN MENU */
         .skin-back {
             margin-top: 35px;
 
@@ -380,7 +369,6 @@
             background: #5d6961;
         }
 
-        /* HIDDEN */
         .hidden {
             display: none !important;
         }
@@ -394,7 +382,7 @@
             position: relative;
         }
 
-        /* BACK BUTTON */
+        /* BACK */
         .back-button {
             position: absolute;
             left: 10px;
@@ -444,7 +432,6 @@
             z-index: 20;
         }
 
-        /* GAME OVER MENU */
         .game-over {
             background: rgba(10, 15, 10, 0.78);
         }
@@ -480,20 +467,17 @@
 
 <body>
 
-    <!-- GAME -->
     <div class="game" id="game">
 
-        <!-- KILLS -->
         <div class="kills" id="kills">
             KILLS: 0
         </div>
 
-        <!-- STREAK -->
         <div class="streak" id="streak">
             STREAK: 0
         </div>
 
-        <!-- 500 KILLS MENU BUTTON -->
+        <!-- ONLY APPEARS AT 500+ KILLS -->
         <button
             class="menu-button hidden"
             id="menuButton"
@@ -502,10 +486,9 @@
             MENU
         </button>
 
-        <!-- PLAYER -->
         <div class="player" id="player"></div>
 
-        <!-- START / GAME OVER MENU -->
+        <!-- START / GAME OVER -->
         <div class="menu" id="menu">
 
             <div class="menu-title" id="menuTitle">
@@ -550,52 +533,42 @@
 
                 <!-- LOCKED 2 -->
                 <div class="skin-option">
-
                     <button
                         class="skin-square skin-locked"
                         disabled
                     ></button>
-
                 </div>
 
                 <!-- LOCKED 3 -->
                 <div class="skin-option">
-
                     <button
                         class="skin-square skin-locked"
                         disabled
                     ></button>
-
                 </div>
 
                 <!-- LOCKED 4 -->
                 <div class="skin-option">
-
                     <button
                         class="skin-square skin-locked"
                         disabled
                     ></button>
-
                 </div>
 
                 <!-- LOCKED 5 -->
                 <div class="skin-option">
-
                     <button
                         class="skin-square skin-locked"
                         disabled
                     ></button>
-
                 </div>
 
                 <!-- LOCKED 6 -->
                 <div class="skin-option">
-
                     <button
                         class="skin-square skin-locked"
                         disabled
                     ></button>
-
                 </div>
 
             </div>
@@ -615,7 +588,6 @@
     <!-- CONTROLS -->
     <div class="controls">
 
-        <!-- DOWN -->
         <button
             class="control-button"
             onclick="movePlayer(1)"
@@ -623,7 +595,6 @@
             ↓
         </button>
 
-        <!-- SHOOT -->
         <button
             class="control-button shoot-button"
             onclick="shoot()"
@@ -631,7 +602,6 @@
             -
         </button>
 
-        <!-- UP -->
         <button
             class="control-button"
             onclick="movePlayer(-1)"
@@ -642,7 +612,7 @@
     </div>
 
 
-    <!-- CODE AREA -->
+    <!-- CODE -->
     <div class="code-area">
 
         <input
@@ -663,7 +633,6 @@
     </div>
 
 
-    <!-- BOTTOM -->
     <div class="bottom">
 
         <a
@@ -761,7 +730,7 @@
             "STREAK: " + streak;
 
 
-        /* MENU ONLY APPEARS AT 500 KILLS */
+        /* MENU ONLY AFTER 500 KILLS */
 
         function updateMenuButton() {
 
@@ -836,12 +805,8 @@
                 kills
             );
 
-            /* SHOW MENU AT 500 */
-
             updateMenuButton();
 
-
-            /* STREAK */
 
             streak++;
 
@@ -917,7 +882,6 @@
 
             updatePlayer();
 
-
             menu.classList.remove(
                 "game-over"
             );
@@ -926,11 +890,9 @@
                 "hidden"
             );
 
-
             skinMenu.classList.add(
                 "hidden"
             );
-
 
             enemySpawner =
                 setInterval(
@@ -940,7 +902,7 @@
         }
 
 
-        /* OPEN SKIN MENU */
+        /* OPEN MENU */
 
         function openSkinMenu() {
 
@@ -964,7 +926,7 @@
         }
 
 
-        /* CLOSE SKIN MENU */
+        /* CLOSE MENU */
 
         function closeSkinMenu() {
 
@@ -984,7 +946,7 @@
         }
 
 
-        /* SELECT BLUE SKIN */
+        /* BLUE SKIN */
 
         function selectBlueSkin() {
 
@@ -1036,7 +998,6 @@
                 "enemy"
             );
 
-
             const randomIndex =
                 Math.floor(
                     Math.random() *
@@ -1046,16 +1007,13 @@
             const randomLane =
                 lanes[randomIndex];
 
-
             enemy.style.left =
                 game.clientWidth + "px";
 
             enemy.style.top =
                 randomLane + "%";
 
-
             game.appendChild(enemy);
-
 
             enemies.push({
 
@@ -1075,14 +1033,12 @@
 
             if (!gameStarted) return;
 
-
             const bullet =
                 document.createElement("div");
 
             bullet.classList.add(
                 "bullet"
             );
-
 
             if (streak >= 25) {
 
@@ -1091,23 +1047,18 @@
                 );
             }
 
-
             const playerX =
                 100 + 60;
 
-
             bullet.style.left =
                 playerX + "px";
-
 
             bullet.style.top =
                 "calc(" +
                 lanes[playerLane] +
                 "% - 6px)";
 
-
             game.appendChild(bullet);
-
 
             bullets.push({
 
@@ -1127,30 +1078,24 @@
 
             gameStarted = false;
 
-
             clearInterval(
                 enemySpawner
             );
 
             enemySpawner = null;
 
-
             enemies.forEach(enemy => {
                 enemy.element.remove();
             });
-
 
             bullets.forEach(bullet => {
                 bullet.element.remove();
             });
 
-
             enemies = [];
             bullets = [];
 
-
             resetStreak();
-
 
             menu.classList.remove(
                 "hidden"
@@ -1160,10 +1105,8 @@
                 "game-over"
             );
 
-
             menuTitle.textContent =
                 "GAME OVER";
-
 
             startButton.textContent =
                 "RESTART";
@@ -1294,6 +1237,73 @@
                 }
 
 
+                /* 500 KILL CODE
+                   +500, NOT SET TO 500
+                   ONE USE ONLY */
+
+                if (
+                    enteredCode ===
+                    "500KILL.CODE"
+                ) {
+
+                    const codeUsed =
+                        localStorage.getItem(
+                            "500KillCodeUsed"
+                        ) === "true";
+
+
+                    if (codeUsed) {
+
+                        codeInput.value =
+                            "CODE USED";
+
+                        setTimeout(
+                            function() {
+                                codeInput.value = "";
+                            },
+                            1500
+                        );
+
+                        return;
+                    }
+
+
+                    /* ADD 500 TO CURRENT KILLS */
+
+                    kills += 500;
+
+
+                    killsText.textContent =
+                        "KILLS: " + kills;
+
+
+                    localStorage.setItem(
+                        "slimeManMillerKills",
+                        kills
+                    );
+
+
+                    /* MARK CODE AS USED */
+
+                    localStorage.setItem(
+                        "500KillCodeUsed",
+                        "true"
+                    );
+
+
+                    /* UPDATE 500+ MENU */
+
+                    updateMenuButton();
+
+
+                    codeInput.value = "";
+
+                    return;
+                }
+
+
+                /* UNKNOWN CODE */
+
                 codeInput.value = "";
             }
         );
@@ -1313,13 +1323,6 @@
 
             }
         );
-
-
-        /* START */
-
-        updatePlayer();
-
-        gameLoop();
 
 
         /* GAME LOOP */
@@ -1478,7 +1481,6 @@
                                 .element
                                 .remove();
 
-
                             enemies.splice(
                                 e,
                                 1
@@ -1489,7 +1491,6 @@
                                 1
                             );
 
-
                             addKill();
 
                             break;
@@ -1498,13 +1499,20 @@
                 }
             }
 
-
             requestAnimationFrame(
                 gameLoop
             );
         }
 
+
+        /* START */
+
+        updatePlayer();
+
+        gameLoop();
+
     </script>
 
 </body>
 </html>
+```
