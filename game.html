@@ -49,9 +49,9 @@
             background: #b85f5f;
         }
 
-        /* SECRET CODE PLAYER */
+        /* PERMANENT SECRET CODE PLAYER */
         .player.secret-code {
-            background: red;
+            background: red !important;
         }
 
         /* BLACK X */
@@ -512,6 +512,24 @@
         let streak = 0;
 
 
+        /* CHECK PERMANENT SECRET CODE */
+
+        let secretCodeUsed =
+            localStorage.getItem(
+                "slimeManMillerSecretCodeUsed"
+            ) === "true";
+
+
+        /* RESTORE SECRET CODE */
+
+        if (secretCodeUsed) {
+
+            player.classList.add(
+                "secret-code"
+            );
+        }
+
+
         killsText.textContent =
             "KILLS: " + kills;
 
@@ -607,9 +625,17 @@
                 "high-streak"
             );
 
-            player.classList.remove(
-                "high-streak"
-            );
+            /*
+                DO NOT REMOVE
+                SECRET CODE EFFECT
+            */
+
+            if (!secretCodeUsed) {
+
+                player.classList.remove(
+                    "high-streak"
+                );
+            }
         }
 
 
@@ -623,6 +649,8 @@
 
             gameStarted = true;
 
+
+            /* PLAYER STARTS IN MIDDLE */
 
             playerLane = 5;
 
@@ -709,7 +737,10 @@
             );
 
 
-            /* 25+ = RED BULLET */
+            /*
+                NORMAL = YELLOW
+                25+ = DARK RED
+            */
 
             if (streak >= 25) {
 
@@ -1045,12 +1076,54 @@
                     codeInput.value.trim();
 
 
-                /* SECRET RED PLAYER CODE */
+                /* COOLEST COOKIE CODE */
 
                 if (
                     enteredCode ===
                     "COOLEST.COOKIE.HTJYXX"
                 ) {
+
+                    if (secretCodeUsed) {
+
+                        codeInput.value =
+                            "CODE USED";
+
+                        return;
+                    }
+
+
+                    /*
+                        MARK CODE AS USED
+                        PERMANENTLY
+                    */
+
+                    secretCodeUsed = true;
+
+                    localStorage.setItem(
+                        "slimeManMillerSecretCodeUsed",
+                        "true"
+                    );
+
+
+                    /*
+                        +100 KILLS
+                    */
+
+                    kills += 100;
+
+                    killsText.textContent =
+                        "KILLS: " + kills;
+
+                    localStorage.setItem(
+                        "slimeManMillerKills",
+                        kills
+                    );
+
+
+                    /*
+                        PERMANENT RED
+                        PLAYER + BLACK X
+                    */
 
                     player.classList.add(
                         "secret-code"
@@ -1060,7 +1133,7 @@
 
                 /* STREAK CODE */
 
-                if (
+                else if (
                     enteredCode ===
                     "STREAK.CODE"
                 ) {
@@ -1080,7 +1153,20 @@
                 }
 
 
-                codeInput.value = "";
+                /*
+                    CLEAR INPUT
+                    EXCEPT CODE USED
+                */
+
+                if (
+                    enteredCode !==
+                    "COOLEST.COOKIE.HTJYXX"
+                    || !secretCodeUsed
+                ) {
+
+                    codeInput.value = "";
+                }
+
             }
         );
 
