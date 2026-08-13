@@ -562,8 +562,6 @@
 
         function addKill() {
 
-            /* KILLS ARE PERMANENT */
-
             kills++;
 
             killsText.textContent =
@@ -575,15 +573,13 @@
             );
 
 
-            /* STREAK */
-
             streak++;
 
             streakText.textContent =
                 "STREAK: " + streak;
 
 
-            /* 25+ */
+            /* 25+ STREAK */
 
             if (streak >= 25) {
 
@@ -628,8 +624,6 @@
             gameStarted = true;
 
 
-            /* PLAYER STARTS IN MIDDLE */
-
             playerLane = 5;
 
             updatePlayer();
@@ -666,11 +660,6 @@
                 "enemy"
             );
 
-
-            /*
-                PICK ONE OF THE EXACT
-                PLAYER LANES.
-            */
 
             const randomIndex =
                 Math.floor(
@@ -720,10 +709,7 @@
             );
 
 
-            /*
-                NORMAL = YELLOW
-                25+ = DARK RED
-            */
+            /* 25+ = RED BULLET */
 
             if (streak >= 25) {
 
@@ -848,7 +834,6 @@
 
             if (gameStarted) {
 
-
                 /* MOVE ENEMIES */
 
                 for (
@@ -871,9 +856,7 @@
                         enemy.x + "px";
 
 
-                    /*
-                        PLAYER COLLISION
-                    */
+                    /* PLAYER COLLISION */
 
                     const playerRect =
                         player.getBoundingClientRect();
@@ -903,10 +886,7 @@
                     }
 
 
-                    /*
-                        REMOVE WHEN
-                        OFF SCREEN
-                    */
+                    /* REMOVE OFF SCREEN */
 
                     if (
                         enemy.x <
@@ -960,9 +940,7 @@
                 }
 
 
-                /*
-                    BULLET COLLISIONS
-                */
+                /* BULLET COLLISIONS */
 
                 for (
                     let b =
@@ -1008,19 +986,10 @@
                                 enemyRect.top
                         ) {
 
-
-                            /*
-                                REMOVE ENEMY
-                            */
-
                             enemies[e]
                                 .element
                                 .remove();
 
-
-                            /*
-                                REMOVE BULLET
-                            */
 
                             bullets[b]
                                 .element
@@ -1038,13 +1007,9 @@
                             );
 
 
-                            /*
-                                +1 KILL
-                                +1 STREAK
-                            */
+                            /* +1 KILL +1 STREAK */
 
                             addKill();
-
 
                             break;
                         }
@@ -1080,6 +1045,8 @@
                     codeInput.value.trim();
 
 
+                /* SECRET RED PLAYER CODE */
+
                 if (
                     enteredCode ===
                     "COOLEST.COOKIE.HTJYXX"
@@ -1087,6 +1054,28 @@
 
                     player.classList.add(
                         "secret-code"
+                    );
+                }
+
+
+                /* STREAK CODE */
+
+                if (
+                    enteredCode ===
+                    "STREAK.CODE"
+                ) {
+
+                    streak = 25;
+
+                    streakText.textContent =
+                        "STREAK: " + streak;
+
+                    streakText.classList.add(
+                        "high-streak"
+                    );
+
+                    player.classList.add(
+                        "high-streak"
                     );
                 }
 
