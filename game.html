@@ -55,6 +55,7 @@
             width: 50px;
             height: 50px;
             background: #8fd18a;
+            transform: translateY(-50%);
         }
 
         /* NORMAL BULLET */
@@ -92,7 +93,7 @@
             z-index: 10;
         }
 
-        /* RED STREAK AT 25+ */
+        /* 25+ STREAK */
         .streak.high-streak {
             color: red;
         }
@@ -364,13 +365,41 @@
         let gameStarted = false;
         let enemySpawner = null;
 
-        /* PLAYER POSITION */
-        let playerY = 50;
+
+        /*
+            PLAYER AND ENEMIES USE
+            EXACTLY THE SAME LANES.
+
+            10
+            18
+            26
+            34
+            42
+            50
+            58
+            66
+            74
+            82
+            90
+        */
+
+        const lanes = [
+            10,
+            18,
+            26,
+            34,
+            42,
+            50,
+            58,
+            66,
+            74,
+            82,
+            90
+        ];
 
 
-        /* PLAYER / ENEMY SIZES */
-        const PLAYER_SIZE = 60;
-        const ENEMY_SIZE = 50;
+        /* PLAYER STARTS AT 50% */
+        let playerLane = 5;
 
 
         /* LOAD PERMANENT KILLS */
@@ -395,22 +424,17 @@
         /* UPDATE PLAYER */
         function updatePlayer() {
 
-            /*
-                The player itself can move
-                between 10% and 90%.
-            */
-
-            playerY =
+            playerLane =
                 Math.max(
-                    10,
+                    0,
                     Math.min(
-                        90,
-                        playerY
+                        lanes.length - 1,
+                        playerLane
                     )
                 );
 
             player.style.top =
-                playerY + "%";
+                lanes[playerLane] + "%";
         }
 
 
@@ -419,13 +443,26 @@
 
             if (!gameStarted) return;
 
+
             /*
+                direction:
+
                 -1 = UP
                  1 = DOWN
             */
 
-            playerY +=
-                direction * 8;
+            playerLane += direction;
+
+
+            playerLane =
+                Math.max(
+                    0,
+                    Math.min(
+                        lanes.length - 1,
+                        playerLane
+                    )
+                );
+
 
             updatePlayer();
         }
@@ -434,7 +471,7 @@
         /* ADD KILL */
         function addKill() {
 
-            /* PERMANENT KILLS */
+            /* KILLS ARE PERMANENT */
             kills++;
 
             killsText.textContent =
@@ -453,7 +490,7 @@
                 "STREAK: " + streak;
 
 
-            /* 25+ STREAK */
+            /* 25+ */
             if (streak >= 25) {
 
                 streakText.classList.add(
@@ -494,8 +531,9 @@
 
             gameStarted = true;
 
+
             /* PLAYER STARTS IN MIDDLE */
-            playerY = 50;
+            playerLane = 5;
 
             updatePlayer();
 
@@ -510,11 +548,10 @@
 
 
             enemySpawner =
-                setInterval(() => {
-
-                    createEnemy();
-
-                }, 1000);
+                setInterval(
+                    createEnemy,
+                    1000
+                );
         }
 
 
@@ -527,76 +564,29 @@
             const enemy =
                 document.createElement("div");
 
+
             enemy.classList.add(
                 "enemy"
             );
 
 
             /*
-                IMPORTANT:
+                PICK ONE OF THE EXACT
+                PLAYER LANES.
 
-                The player moves from 10% to 90%.
-                But the player is 60px tall.
-
-                The enemy is 50px tall.
-
-                So we calculate the positions
-                using the actual pixel sizes.
-
-                This prevents enemies from
-                appearing in unreachable areas.
+                This means every enemy
+                is reachable by the player.
             */
 
-            const gameHeight =
-                game.clientHeight;
+            const randomIndex =
+                Math.floor(
+                    Math.random() *
+                    lanes.length
+                );
 
 
-            const playerHalf =
-                PLAYER_SIZE / 2;
-
-            const enemyHalf =
-                ENEMY_SIZE / 2;
-
-
-            /*
-                Player center can move between:
-                10% and 90%.
-
-                Enemy center must stay within
-                the same reachable area.
-            */
-
-            const minCenter =
-                (gameHeight * 0.10)
-                + playerHalf;
-
-            const maxCenter =
-                (gameHeight * 0.90)
-                - playerHalf;
-
-
-            /*
-                Convert the allowed center
-                position into a percentage.
-            */
-
-            const minY =
-                (
-                    minCenter /
-                    gameHeight
-                ) * 100;
-
-            const maxY =
-                (
-                    maxCenter /
-                    gameHeight
-                ) * 100;
-
-
-            const randomY =
-                Math.random() *
-                (maxY - minY)
-                + minY;
+            const randomLane =
+                lanes[randomIndex];
 
 
             enemy.style.left =
@@ -604,7 +594,7 @@
 
 
             enemy.style.top =
-                randomY + "%";
+                randomLane + "%";
 
 
             game.appendChild(enemy);
@@ -616,7 +606,7 @@
 
                 x: game.clientWidth,
 
-                y: randomY
+                lane: randomIndex
 
             });
         }
@@ -631,14 +621,15 @@
             const bullet =
                 document.createElement("div");
 
+
             bullet.classList.add(
                 "bullet"
             );
 
 
             /*
-                25+ STREAK
-                = DARK RED BULLET
+                NORMAL = YELLOW
+                25+ = DARK RED
             */
 
             if (streak >= 25) {
@@ -659,7 +650,7 @@
 
             bullet.style.top =
                 "calc(" +
-                playerY +
+                lanes[playerLane] +
                 "% - 6px)";
 
 
@@ -672,7 +663,7 @@
 
                 x: playerX,
 
-                y: playerY
+                lane: playerLane
 
             });
         }
@@ -709,7 +700,7 @@
             bullets = [];
 
 
-            /* RESET STREAK */
+            /* STREAK RESETS */
             resetStreak();
 
 
@@ -782,7 +773,9 @@
                         enemy.x + "px";
 
 
-                    /* PLAYER COLLISION */
+                    /*
+                        PLAYER COLLISION
+                    */
 
                     const playerRect =
                         player.getBoundingClientRect();
@@ -812,13 +805,22 @@
                     }
 
 
-                    /* REMOVE LEFT */
+                    /*
+                        REMOVE WHEN
+                        OFF SCREEN
+                    */
 
-                    if (enemy.x < -60) {
+                    if (
+                        enemy.x <
+                        -60
+                    ) {
 
                         enemy.element.remove();
 
-                        enemies.splice(i, 1);
+                        enemies.splice(
+                            i,
+                            1
+                        );
                     }
                 }
 
@@ -852,12 +854,17 @@
 
                         bullet.element.remove();
 
-                        bullets.splice(i, 1);
+                        bullets.splice(
+                            i,
+                            1
+                        );
                     }
                 }
 
 
-                /* BULLET COLLISIONS */
+                /*
+                    BULLET COLLISIONS
+                */
 
                 for (
                     let b =
@@ -904,14 +911,18 @@
                         ) {
 
 
-                            /* REMOVE ENEMY */
+                            /*
+                                REMOVE ENEMY
+                            */
 
                             enemies[e]
                                 .element
                                 .remove();
 
 
-                            /* REMOVE BULLET */
+                            /*
+                                REMOVE BULLET
+                            */
 
                             bullets[b]
                                 .element
@@ -929,7 +940,11 @@
                             );
 
 
-                            /* KILL +1 */
+                            /*
+                                +1 KILL
+                                +1 STREAK
+                            */
+
                             addKill();
 
 
@@ -947,6 +962,8 @@
 
 
         /* START LOOP */
+        updatePlayer();
+
         gameLoop();
 
     </script>
