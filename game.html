@@ -368,6 +368,11 @@
         let playerY = 50;
 
 
+        /* PLAYER / ENEMY SIZES */
+        const PLAYER_SIZE = 60;
+        const ENEMY_SIZE = 50;
+
+
         /* LOAD PERMANENT KILLS */
         let kills = Number(
             localStorage.getItem(
@@ -391,8 +396,8 @@
         function updatePlayer() {
 
             /*
-                PLAYER CAN MOVE
-                ONLY BETWEEN 10% AND 90%
+                The player itself can move
+                between 10% and 90%.
             */
 
             playerY =
@@ -528,16 +533,64 @@
 
 
             /*
-                GREEN BOXES CAN APPEAR
-                WHERE THE PLAYER CAN GO.
+                IMPORTANT:
 
-                TOP 10% = NO
-                MIDDLE 80% = YES
-                BOTTOM 10% = NO
+                The player moves from 10% to 90%.
+                But the player is 60px tall.
+
+                The enemy is 50px tall.
+
+                So we calculate the positions
+                using the actual pixel sizes.
+
+                This prevents enemies from
+                appearing in unreachable areas.
             */
 
-            const minY = 10;
-            const maxY = 90;
+            const gameHeight =
+                game.clientHeight;
+
+
+            const playerHalf =
+                PLAYER_SIZE / 2;
+
+            const enemyHalf =
+                ENEMY_SIZE / 2;
+
+
+            /*
+                Player center can move between:
+                10% and 90%.
+
+                Enemy center must stay within
+                the same reachable area.
+            */
+
+            const minCenter =
+                (gameHeight * 0.10)
+                + playerHalf;
+
+            const maxCenter =
+                (gameHeight * 0.90)
+                - playerHalf;
+
+
+            /*
+                Convert the allowed center
+                position into a percentage.
+            */
+
+            const minY =
+                (
+                    minCenter /
+                    gameHeight
+                ) * 100;
+
+            const maxY =
+                (
+                    maxCenter /
+                    gameHeight
+                ) * 100;
 
 
             const randomY =
@@ -548,6 +601,7 @@
 
             enemy.style.left =
                 game.clientWidth + "px";
+
 
             enemy.style.top =
                 randomY + "%";
