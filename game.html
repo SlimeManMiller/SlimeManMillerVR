@@ -41,6 +41,12 @@
             height: 60px;
             background: #777d79;
             transform: translateY(-50%);
+            transition: background 0.2s;
+        }
+
+        /* PLAYER AT 25+ STREAK */
+        .player.high-streak {
+            background: #b85f5f;
         }
 
         /* GREEN BOXES */
@@ -83,6 +89,11 @@
             font-weight: bold;
 
             z-index: 10;
+        }
+
+        /* RED STREAK */
+        .streak.high-streak {
+            color: red;
         }
 
         /* CONTROLS */
@@ -289,6 +300,7 @@
 
         const killsText = document.getElementById("kills");
         const streakText = document.getElementById("streak");
+        const player = document.getElementById("player");
 
         let enemies = [];
         let bullets = [];
@@ -301,7 +313,7 @@
             localStorage.getItem("slimeManMillerKills") || 0
         );
 
-        /* STREAK ALWAYS STARTS AT 0 */
+        /* STREAK STARTS AT 0 */
         let streak = 0;
 
         killsText.textContent =
@@ -330,6 +342,14 @@
 
             streakText.textContent =
                 "STREAK: " + streak;
+
+            /* 25+ STREAK */
+            if (streak >= 25) {
+
+                streakText.classList.add("high-streak");
+
+                player.classList.add("high-streak");
+            }
         }
 
 
@@ -340,6 +360,14 @@
 
             streakText.textContent =
                 "STREAK: 0";
+
+            streakText.classList.remove(
+                "high-streak"
+            );
+
+            player.classList.remove(
+                "high-streak"
+            );
         }
 
 
@@ -348,13 +376,18 @@
 
             clearGame();
 
-            /* RESET STREAK WHEN STARTING / RESTARTING */
+            /* RESET STREAK ON START / RESTART */
             resetStreak();
 
             gameStarted = true;
 
-            menu.classList.remove("game-over");
-            menu.classList.add("hidden");
+            menu.classList.remove(
+                "game-over"
+            );
+
+            menu.classList.add(
+                "hidden"
+            );
 
             enemySpawner = setInterval(() => {
                 createEnemy();
@@ -367,7 +400,8 @@
 
             if (!gameStarted) return;
 
-            const enemy = document.createElement("div");
+            const enemy =
+                document.createElement("div");
 
             enemy.classList.add("enemy");
 
@@ -395,11 +429,13 @@
 
             if (!gameStarted) return;
 
-            const bullet = document.createElement("div");
+            const bullet =
+                document.createElement("div");
 
             bullet.classList.add("bullet");
 
-            const playerX = 100 + 60;
+            const playerX =
+                100 + 60;
 
             bullet.style.left =
                 playerX + "px";
@@ -441,8 +477,13 @@
             resetStreak();
 
             /* SHOW GAME OVER */
-            menu.classList.remove("hidden");
-            menu.classList.add("game-over");
+            menu.classList.remove(
+                "hidden"
+            );
+
+            menu.classList.add(
+                "game-over"
+            );
 
             menuTitle.textContent =
                 "GAME OVER";
@@ -480,7 +521,8 @@
                     i--
                 ) {
 
-                    const enemy = enemies[i];
+                    const enemy =
+                        enemies[i];
 
                     enemy.x -= 4;
 
@@ -490,9 +532,7 @@
 
                     /* PLAYER COLLISION */
                     const playerRect =
-                        document
-                            .getElementById("player")
-                            .getBoundingClientRect();
+                        player.getBoundingClientRect();
 
                     const enemyRect =
                         enemy.element
@@ -500,10 +540,14 @@
 
 
                     if (
-                        playerRect.left < enemyRect.right &&
-                        playerRect.right > enemyRect.left &&
-                        playerRect.top < enemyRect.bottom &&
-                        playerRect.bottom > enemyRect.top
+                        playerRect.left <
+                            enemyRect.right &&
+                        playerRect.right >
+                            enemyRect.left &&
+                        playerRect.top <
+                            enemyRect.bottom &&
+                        playerRect.bottom >
+                            enemyRect.top
                     ) {
 
                         gameOver();
@@ -529,7 +573,8 @@
                     i--
                 ) {
 
-                    const bullet = bullets[i];
+                    const bullet =
+                        bullets[i];
 
                     bullet.x += 8;
 
@@ -537,7 +582,10 @@
                         bullet.x + "px";
 
 
-                    if (bullet.x > game.clientWidth) {
+                    if (
+                        bullet.x >
+                        game.clientWidth
+                    ) {
 
                         bullet.element.remove();
 
@@ -569,10 +617,14 @@
 
 
                         if (
-                            bulletRect.left < enemyRect.right &&
-                            bulletRect.right > enemyRect.left &&
-                            bulletRect.top < enemyRect.bottom &&
-                            bulletRect.bottom > enemyRect.top
+                            bulletRect.left <
+                                enemyRect.right &&
+                            bulletRect.right >
+                                enemyRect.left &&
+                            bulletRect.top <
+                                enemyRect.bottom &&
+                            bulletRect.bottom >
+                                enemyRect.top
                         ) {
 
                             /* REMOVE ENEMY */
@@ -584,7 +636,7 @@
                             enemies.splice(e, 1);
                             bullets.splice(b, 1);
 
-                            /* KILL +1 */
+                            /* KILL +1 AND STREAK +1 */
                             addKill();
 
                             break;
@@ -593,7 +645,9 @@
                 }
             }
 
-            requestAnimationFrame(gameLoop);
+            requestAnimationFrame(
+                gameLoop
+            );
         }
 
 
