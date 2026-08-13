@@ -10,69 +10,78 @@
             box-sizing: border-box;
         }
 
+        html {
+            min-height: 100%;
+        }
+
         body {
             margin: 0;
-            min-height: 160vh;
+            min-height: 300vh;
             font-family: Arial, sans-serif;
+            background: #5f9f55;
+        }
+
+        /* TOP */
+        .top {
+            height: 35vh;
+            min-height: 300px;
 
             background: linear-gradient(
                 to bottom,
                 #205f2c 0%,
-                #286b32 15%,
-                #3f833f 40%,
-                #5f9f55 70%,
-                #3f833f 88%,
-                #286b32 100%
+                #286b32 25%,
+                #3f833f 55%,
+                #5f9f55 100%
             );
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .page {
-            min-height: 160vh;
-            padding: 35px;
-            position: relative;
-        }
-
-        /* TITLE */
         .title {
             color: black;
             font-size: 42px;
             font-weight: bold;
-            text-align: center;
         }
 
         /* CONTENT */
         .content {
-            margin-top: 70px;
+            min-height: 230vh;
+            padding: 50px 40px;
         }
 
-        .content-title {
+        .section-title {
             color: black;
-            font-size: 30px;
+            font-size: 32px;
             font-weight: bold;
+            text-align: left;
         }
 
-        /* BACK */
+        /* BACK BUTTON */
+        .back-container {
+            display: flex;
+            justify-content: center;
+            padding: 60px 0;
+        }
+
         .back-button {
-            position: absolute;
+            width: 280px;
+            height: 140px;
 
-            left: 35px;
-            bottom: 35px;
-
-            width: 150px;
-            height: 60px;
-
-            background: #4f5a52;
-            border-radius: 12px;
+            background: #718b78;
+            border-radius: 15px;
 
             display: flex;
             align-items: center;
             justify-content: center;
 
             color: white;
-            font-size: 22px;
+            font-size: 28px;
             font-weight: bold;
-
             text-decoration: none;
+
+            cursor: pointer;
 
             transition:
                 transform 0.2s,
@@ -81,40 +90,58 @@
 
         .back-button:hover {
             transform: scale(1.05);
-            background: #5d6961;
+            background: #809b87;
+        }
+
+        /* BOTTOM */
+        .bottom {
+            height: 35vh;
+            min-height: 300px;
+
+            background: linear-gradient(
+                to bottom,
+                #5f9f55 0%,
+                #3f833f 45%,
+                #286b32 75%,
+                #205f2c 100%
+            );
         }
     </style>
 </head>
 
 <body>
 
-    <div class="page">
-
-        <!-- TITLE -->
+    <!-- TOP -->
+    <div class="top">
         <div class="title">
             LEAKS
         </div>
+    </div>
 
 
-        <!-- CONTENT -->
-        <div class="content">
+    <!-- CONTENT -->
+    <div class="content">
 
-            <div class="content-title">
-                LEAKS:
-            </div>
-
+        <div class="section-title">
+            LEAKS:
         </div>
 
+    </div>
 
-        <!-- BACK -->
+
+    <!-- BACK BUTTON -->
+    <div class="back-container">
         <a
             class="back-button"
             href="more.html"
         >
             BACK
         </a>
-
     </div>
+
+
+    <!-- BOTTOM -->
+    <div class="bottom"></div>
 
 </body>
 </html>
