@@ -37,23 +37,14 @@
             position: absolute;
             left: 100px;
             top: 50%;
-
-            /* HITBOX NEVER CHANGES */
             width: 60px;
             height: 60px;
-
             background: #777d79;
-
             transform: translateY(-50%);
             transition: background 0.2s;
-
-            /* PHOTO IS SQUEEZED INTO THE CUBE */
-            background-size: 100% 100%;
-            background-position: center;
-            background-repeat: no-repeat;
         }
 
-        /* 25+ STREAK */
+        /* PLAYER AT 25+ STREAK */
         .player.high-streak {
             background: #b85f5f;
         }
@@ -61,19 +52,6 @@
         /* COOLEST COOKIE */
         .player.secret-code {
             background: red !important;
-        }
-
-        /* KIRBY COOKIE */
-        .player.kirby-code {
-            background: #54206f !important;
-        }
-
-        /* VR CODE PHOTO */
-        .player.vr-code {
-            background-image: url("cube.vr.png") !important;
-            background-size: 100% 100% !important;
-            background-position: center !important;
-            background-repeat: no-repeat !important;
         }
 
         /* BLACK X */
@@ -97,6 +75,11 @@
             transform: translate(-50%, -50%) rotate(-45deg);
         }
 
+        /* KIRBY COOKIE */
+        .player.kirby-code {
+            background: #54206f !important;
+        }
+
         /* GREEN BOXES */
         .enemy {
             position: absolute;
@@ -106,7 +89,7 @@
             transform: translateY(-50%);
         }
 
-        /* BULLET */
+        /* NORMAL BULLET */
         .bullet {
             position: absolute;
             width: 35px;
@@ -114,7 +97,7 @@
             background: #ffd900;
         }
 
-        /* RED BULLET AT 25+ */
+        /* RED BULLET AT 25+ STREAK */
         .bullet.high-streak {
             background: #8b1e1e;
         }
@@ -141,6 +124,7 @@
             z-index: 10;
         }
 
+        /* 25+ STREAK */
         .streak.high-streak {
             color: red;
         }
@@ -159,6 +143,7 @@
             gap: 15px;
         }
 
+        /* UP / DOWN BUTTONS */
         .control-button {
             width: 80px;
             height: 80px;
@@ -188,7 +173,7 @@
             transform: scale(0.92);
         }
 
-        /* SHOOT */
+        /* SHOOT BUTTON */
         .shoot-button {
             width: 220px;
             height: 80px;
@@ -259,6 +244,147 @@
             transform: scale(0.92);
         }
 
+        /* 500 KILLS MENU BUTTON */
+        .menu-button {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+
+            width: 150px;
+            height: 55px;
+
+            background: #4f5a52;
+            color: white;
+
+            border: none;
+            border-radius: 12px;
+
+            font-size: 24px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            z-index: 15;
+        }
+
+        .menu-button:hover {
+            background: #5d6961;
+            transform: translateX(-50%) scale(1.05);
+        }
+
+        /* SKIN MENU */
+        .skin-menu {
+            position: absolute;
+            inset: 0;
+
+            background: rgba(20, 35, 20, 0.85);
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            z-index: 40;
+        }
+
+        .skin-title {
+            color: black;
+            font-size: 42px;
+            font-weight: bold;
+            margin-bottom: 35px;
+        }
+
+        .skins {
+            display: flex;
+            gap: 25px;
+            align-items: flex-start;
+        }
+
+        .skin-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .skin-square {
+            width: 90px;
+            height: 90px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        /* FIRST UNLOCKED SKIN */
+        .skin-blue {
+            background: #00a8f3;
+        }
+
+        /* OTHER LOCKED SKINS */
+        .skin-locked {
+            background: #3d4140;
+            cursor: not-allowed;
+        }
+
+        /* RED X */
+        .skin-locked::before,
+        .skin-locked::after {
+            content: "";
+            position: absolute;
+
+            left: 50%;
+            top: 50%;
+
+            width: 75px;
+            height: 8px;
+
+            background: red;
+        }
+
+        .skin-locked::before {
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        .skin-locked::after {
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+
+        .skin-label {
+            color: black;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* BACK FROM SKIN MENU */
+        .skin-back {
+            margin-top: 35px;
+
+            width: 180px;
+            height: 65px;
+
+            background: #4f5a52;
+            color: white;
+
+            border: none;
+            border-radius: 12px;
+
+            font-size: 24px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .skin-back:hover {
+            background: #5d6961;
+        }
+
+        /* HIDDEN */
+        .hidden {
+            display: none !important;
+        }
+
         /* BOTTOM */
         .bottom {
             width: 100%;
@@ -268,7 +394,7 @@
             position: relative;
         }
 
-        /* BACK */
+        /* BACK BUTTON */
         .back-button {
             position: absolute;
             left: 10px;
@@ -303,7 +429,7 @@
             background: #5d6961;
         }
 
-        /* MENU */
+        /* START MENU */
         .menu {
             position: absolute;
             inset: 0;
@@ -318,6 +444,7 @@
             z-index: 20;
         }
 
+        /* GAME OVER MENU */
         .game-over {
             background: rgba(10, 15, 10, 0.78);
         }
@@ -348,10 +475,6 @@
             background: #5d6961;
             transform: scale(1.05);
         }
-
-        .hidden {
-            display: none;
-        }
     </style>
 </head>
 
@@ -360,16 +483,29 @@
     <!-- GAME -->
     <div class="game" id="game">
 
+        <!-- KILLS -->
         <div class="kills" id="kills">
             KILLS: 0
         </div>
 
+        <!-- STREAK -->
         <div class="streak" id="streak">
             STREAK: 0
         </div>
 
+        <!-- 500 KILLS MENU BUTTON -->
+        <button
+            class="menu-button hidden"
+            id="menuButton"
+            onclick="openSkinMenu()"
+        >
+            MENU
+        </button>
+
+        <!-- PLAYER -->
         <div class="player" id="player"></div>
 
+        <!-- START / GAME OVER MENU -->
         <div class="menu" id="menu">
 
             <div class="menu-title" id="menuTitle">
@@ -386,12 +522,100 @@
 
         </div>
 
+        <!-- SKIN MENU -->
+        <div
+            class="skin-menu hidden"
+            id="skinMenu"
+        >
+
+            <div class="skin-title">
+                MENU
+            </div>
+
+            <div class="skins">
+
+                <!-- BLUE -->
+                <div class="skin-option">
+
+                    <button
+                        class="skin-square skin-blue"
+                        onclick="selectBlueSkin()"
+                    ></button>
+
+                    <div class="skin-label">
+                        500 KILLS
+                    </div>
+
+                </div>
+
+                <!-- LOCKED 2 -->
+                <div class="skin-option">
+
+                    <button
+                        class="skin-square skin-locked"
+                        disabled
+                    ></button>
+
+                </div>
+
+                <!-- LOCKED 3 -->
+                <div class="skin-option">
+
+                    <button
+                        class="skin-square skin-locked"
+                        disabled
+                    ></button>
+
+                </div>
+
+                <!-- LOCKED 4 -->
+                <div class="skin-option">
+
+                    <button
+                        class="skin-square skin-locked"
+                        disabled
+                    ></button>
+
+                </div>
+
+                <!-- LOCKED 5 -->
+                <div class="skin-option">
+
+                    <button
+                        class="skin-square skin-locked"
+                        disabled
+                    ></button>
+
+                </div>
+
+                <!-- LOCKED 6 -->
+                <div class="skin-option">
+
+                    <button
+                        class="skin-square skin-locked"
+                        disabled
+                    ></button>
+
+                </div>
+
+            </div>
+
+            <button
+                class="skin-back"
+                onclick="closeSkinMenu()"
+            >
+                BACK
+            </button>
+
+        </div>
+
     </div>
 
 
     <!-- CONTROLS -->
     <div class="controls">
 
+        <!-- DOWN -->
         <button
             class="control-button"
             onclick="movePlayer(1)"
@@ -399,6 +623,7 @@
             ↓
         </button>
 
+        <!-- SHOOT -->
         <button
             class="control-button shoot-button"
             onclick="shoot()"
@@ -406,6 +631,7 @@
             -
         </button>
 
+        <!-- UP -->
         <button
             class="control-button"
             onclick="movePlayer(-1)"
@@ -416,7 +642,7 @@
     </div>
 
 
-    <!-- CODE -->
+    <!-- CODE AREA -->
     <div class="code-area">
 
         <input
@@ -473,12 +699,26 @@
         const player =
             document.getElementById("player");
 
+        const menuButton =
+            document.getElementById("menuButton");
+
+        const skinMenu =
+            document.getElementById("skinMenu");
+
+        const codeInput =
+            document.getElementById("codeInput");
+
+        const codeCheck =
+            document.getElementById("codeCheck");
+
 
         let enemies = [];
         let bullets = [];
 
         let gameStarted = false;
         let enemySpawner = null;
+
+        let blueSkin = false;
 
 
         /* PLAYER LANES */
@@ -497,7 +737,6 @@
             90
         ];
 
-
         let playerLane = 5;
 
 
@@ -510,6 +749,8 @@
         );
 
 
+        /* CURRENT STREAK */
+
         let streak = 0;
 
 
@@ -518,6 +759,28 @@
 
         streakText.textContent =
             "STREAK: " + streak;
+
+
+        /* MENU ONLY APPEARS AT 500 KILLS */
+
+        function updateMenuButton() {
+
+            if (kills >= 500) {
+
+                menuButton.classList.remove(
+                    "hidden"
+                );
+
+            } else {
+
+                menuButton.classList.add(
+                    "hidden"
+                );
+            }
+        }
+
+
+        updateMenuButton();
 
 
         /* UPDATE PLAYER */
@@ -573,6 +836,13 @@
                 kills
             );
 
+            /* SHOW MENU AT 500 */
+
+            updateMenuButton();
+
+
+            /* STREAK */
+
             streak++;
 
             streakText.textContent =
@@ -592,10 +862,9 @@
                     !player.classList.contains(
                         "kirby-code"
                     ) &&
-                    !player.classList.contains(
-                        "vr-code"
-                    )
+                    !blueSkin
                 ) {
+
                     player.classList.add(
                         "high-streak"
                     );
@@ -624,10 +893,9 @@
                 !player.classList.contains(
                     "kirby-code"
                 ) &&
-                !player.classList.contains(
-                    "vr-code"
-                )
+                !blueSkin
             ) {
+
                 player.classList.remove(
                     "high-streak"
                 );
@@ -649,6 +917,7 @@
 
             updatePlayer();
 
+
             menu.classList.remove(
                 "game-over"
             );
@@ -657,11 +926,100 @@
                 "hidden"
             );
 
+
+            skinMenu.classList.add(
+                "hidden"
+            );
+
+
             enemySpawner =
                 setInterval(
                     createEnemy,
                     1000
                 );
+        }
+
+
+        /* OPEN SKIN MENU */
+
+        function openSkinMenu() {
+
+            if (kills < 500) return;
+
+            gameStarted = false;
+
+            clearInterval(
+                enemySpawner
+            );
+
+            enemySpawner = null;
+
+            clearGame();
+
+            resetStreak();
+
+            skinMenu.classList.remove(
+                "hidden"
+            );
+        }
+
+
+        /* CLOSE SKIN MENU */
+
+        function closeSkinMenu() {
+
+            skinMenu.classList.add(
+                "hidden"
+            );
+
+            menu.classList.remove(
+                "hidden"
+            );
+
+            menuTitle.textContent =
+                "GAME";
+
+            startButton.textContent =
+                "START";
+        }
+
+
+        /* SELECT BLUE SKIN */
+
+        function selectBlueSkin() {
+
+            if (kills < 500) return;
+
+            blueSkin = true;
+
+            player.classList.remove(
+                "secret-code"
+            );
+
+            player.classList.remove(
+                "kirby-code"
+            );
+
+            player.classList.remove(
+                "high-streak"
+            );
+
+            player.style.background =
+                "#00a8f3";
+
+            skinMenu.classList.add(
+                "hidden"
+            );
+
+            menu.classList.remove(
+                "hidden"
+            );
+
+            menuTitle.textContent =
+                "GAME";
+
+            startButton.textContent =
+                "START";
         }
 
 
@@ -678,6 +1036,7 @@
                 "enemy"
             );
 
+
             const randomIndex =
                 Math.floor(
                     Math.random() *
@@ -687,13 +1046,16 @@
             const randomLane =
                 lanes[randomIndex];
 
+
             enemy.style.left =
                 game.clientWidth + "px";
 
             enemy.style.top =
                 randomLane + "%";
 
+
             game.appendChild(enemy);
+
 
             enemies.push({
 
@@ -713,12 +1075,14 @@
 
             if (!gameStarted) return;
 
+
             const bullet =
                 document.createElement("div");
 
             bullet.classList.add(
                 "bullet"
             );
+
 
             if (streak >= 25) {
 
@@ -727,18 +1091,23 @@
                 );
             }
 
+
             const playerX =
                 100 + 60;
 
+
             bullet.style.left =
                 playerX + "px";
+
 
             bullet.style.top =
                 "calc(" +
                 lanes[playerLane] +
                 "% - 6px)";
 
+
             game.appendChild(bullet);
+
 
             bullets.push({
 
@@ -758,24 +1127,30 @@
 
             gameStarted = false;
 
+
             clearInterval(
                 enemySpawner
             );
 
             enemySpawner = null;
 
+
             enemies.forEach(enemy => {
                 enemy.element.remove();
             });
+
 
             bullets.forEach(bullet => {
                 bullet.element.remove();
             });
 
+
             enemies = [];
             bullets = [];
 
+
             resetStreak();
+
 
             menu.classList.remove(
                 "hidden"
@@ -785,8 +1160,10 @@
                 "game-over"
             );
 
+
             menuTitle.textContent =
                 "GAME OVER";
+
 
             startButton.textContent =
                 "RESTART";
@@ -808,6 +1185,141 @@
             enemies = [];
             bullets = [];
         }
+
+
+        /* CODE SYSTEM */
+
+        codeCheck.addEventListener(
+            "click",
+            function() {
+
+                const enteredCode =
+                    codeInput.value.trim();
+
+
+                /* COOLEST COOKIE */
+
+                if (
+                    enteredCode ===
+                    "COOLEST.COOKIE.HTJYXX"
+                ) {
+
+                    player.classList.remove(
+                        "kirby-code"
+                    );
+
+                    player.classList.remove(
+                        "high-streak"
+                    );
+
+                    blueSkin = false;
+
+                    player.style.background =
+                        "red";
+
+                    player.classList.add(
+                        "secret-code"
+                    );
+
+                    codeInput.value = "";
+
+                    return;
+                }
+
+
+                /* KIRBY COOKIE */
+
+                if (
+                    enteredCode ===
+                    "KIRBY.COOKIE.HTJXX"
+                ) {
+
+                    player.classList.remove(
+                        "secret-code"
+                    );
+
+                    player.classList.remove(
+                        "high-streak"
+                    );
+
+                    blueSkin = false;
+
+                    player.style.background =
+                        "#54206f";
+
+                    player.classList.add(
+                        "kirby-code"
+                    );
+
+                    codeInput.value = "";
+
+                    return;
+                }
+
+
+                /* STREAK CODE */
+
+                if (
+                    enteredCode ===
+                    "STREAK.CODE"
+                ) {
+
+                    streak = 25;
+
+                    streakText.textContent =
+                        "STREAK: " + streak;
+
+                    streakText.classList.add(
+                        "high-streak"
+                    );
+
+                    if (
+                        !player.classList.contains(
+                            "secret-code"
+                        ) &&
+                        !player.classList.contains(
+                            "kirby-code"
+                        ) &&
+                        !blueSkin
+                    ) {
+
+                        player.classList.add(
+                            "high-streak"
+                        );
+                    }
+
+                    codeInput.value = "";
+
+                    return;
+                }
+
+
+                codeInput.value = "";
+            }
+        );
+
+
+        /* ENTER TO SUBMIT */
+
+        codeInput.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (event.key === "Enter") {
+
+                    codeCheck.click();
+
+                }
+
+            }
+        );
+
+
+        /* START */
+
+        updatePlayer();
+
+        gameLoop();
 
 
         /* GAME LOOP */
@@ -836,8 +1348,6 @@
                         enemy.x + "px";
 
 
-                    /* PLAYER COLLISION */
-
                     const playerRect =
                         player.getBoundingClientRect();
 
@@ -865,8 +1375,6 @@
                         break;
                     }
 
-
-                    /* OFF SCREEN */
 
                     if (
                         enemy.x < -60
@@ -970,6 +1478,7 @@
                                 .element
                                 .remove();
 
+
                             enemies.splice(
                                 e,
                                 1
@@ -980,6 +1489,7 @@
                                 1
                             );
 
+
                             addKill();
 
                             break;
@@ -988,184 +1498,11 @@
                 }
             }
 
+
             requestAnimationFrame(
                 gameLoop
             );
         }
-
-
-        /* CODE SYSTEM */
-
-        const codeInput =
-            document.getElementById(
-                "codeInput"
-            );
-
-        const codeCheck =
-            document.getElementById(
-                "codeCheck"
-            );
-
-
-        codeCheck.addEventListener(
-            "click",
-            function() {
-
-                const enteredCode =
-                    codeInput.value.trim();
-
-
-                /* COOLEST COOKIE */
-
-                if (
-                    enteredCode ===
-                    "COOLEST.COOKIE.HTJYXX"
-                ) {
-
-                    player.classList.remove(
-                        "kirby-code"
-                    );
-
-                    player.classList.remove(
-                        "vr-code"
-                    );
-
-                    player.classList.remove(
-                        "high-streak"
-                    );
-
-                    player.classList.add(
-                        "secret-code"
-                    );
-
-                    codeInput.value = "";
-
-                    return;
-                }
-
-
-                /* KIRBY COOKIE */
-
-                if (
-                    enteredCode ===
-                    "KIRBY.COOKIE.HTJXX"
-                ) {
-
-                    player.classList.remove(
-                        "secret-code"
-                    );
-
-                    player.classList.remove(
-                        "vr-code"
-                    );
-
-                    player.classList.remove(
-                        "high-streak"
-                    );
-
-                    player.classList.add(
-                        "kirby-code"
-                    );
-
-                    codeInput.value = "";
-
-                    return;
-                }
-
-
-                /* STREAK CODE */
-
-                if (
-                    enteredCode ===
-                    "STREAK.CODE"
-                ) {
-
-                    streak = 25;
-
-                    streakText.textContent =
-                        "STREAK: " + streak;
-
-                    streakText.classList.add(
-                        "high-streak"
-                    );
-
-                    if (
-                        !player.classList.contains(
-                            "secret-code"
-                        ) &&
-                        !player.classList.contains(
-                            "kirby-code"
-                        ) &&
-                        !player.classList.contains(
-                            "vr-code"
-                        )
-                    ) {
-                        player.classList.add(
-                            "high-streak"
-                        );
-                    }
-
-                    codeInput.value = "";
-
-                    return;
-                }
-
-
-                /* VR CODE */
-
-                if (
-                    enteredCode ===
-                    "VR.CODE"
-                ) {
-
-                    player.classList.remove(
-                        "secret-code"
-                    );
-
-                    player.classList.remove(
-                        "kirby-code"
-                    );
-
-                    player.classList.remove(
-                        "high-streak"
-                    );
-
-                    player.classList.add(
-                        "vr-code"
-                    );
-
-                    codeInput.value = "";
-
-                    return;
-                }
-
-
-                /* UNKNOWN CODE */
-
-                codeInput.value = "";
-            }
-        );
-
-
-        /* ENTER TO SUBMIT */
-
-        codeInput.addEventListener(
-            "keydown",
-            function(event) {
-
-                if (event.key === "Enter") {
-                    codeCheck.click();
-                }
-
-            }
-        );
-
-
-        /* START */
-
-        updatePlayer();
-
-        gameLoop();
 
     </script>
 
