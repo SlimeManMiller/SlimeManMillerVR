@@ -1,4 +1,5 @@
 
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -103,10 +104,10 @@
         /* KILLS */
         .kills {
             position: absolute;
-            top: 12px;
-            left: 15px;
+            top: 20px;
+            left: 25px;
             color: black;
-            font-size: 18px;
+            font-size: 28px;
             font-weight: bold;
             z-index: 10;
         }
@@ -114,10 +115,10 @@
         /* STREAK */
         .streak {
             position: absolute;
-            top: 12px;
-            right: 15px;
+            top: 20px;
+            right: 25px;
             color: black;
-            font-size: 18px;
+            font-size: 28px;
             font-weight: bold;
             z-index: 10;
         }
@@ -126,10 +127,10 @@
             color: red;
         }
 
-        /* MENU BUTTON */
+        /* SMALL MENU BUTTON */
         .menu-button {
             position: absolute;
-            top: 10px;
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
 
@@ -269,7 +270,7 @@
             transform: scale(0.92);
         }
 
-        /* START / GAME OVER MENU */
+        /* START / GAME OVER */
         .menu {
             position: absolute;
             inset: 0;
@@ -359,7 +360,7 @@
             position: relative;
         }
 
-        /* BLUE */
+        /* BLUE 500 KILLS */
         .skin-blue {
             background: #00a8f3;
         }
@@ -375,13 +376,10 @@
         .skin-locked::after {
             content: "";
             position: absolute;
-
             left: 50%;
             top: 50%;
-
             width: 38px;
             height: 5px;
-
             background: red;
         }
 
@@ -400,7 +398,7 @@
             white-space: nowrap;
         }
 
-        /* BACK IN MENU */
+        /* MENU BACK */
         .skin-back {
             margin-top: 15px;
 
@@ -423,7 +421,6 @@
             background: #5d6961;
         }
 
-        /* HIDDEN */
         .hidden {
             display: none !important;
         }
@@ -475,22 +472,24 @@
         /* MOBILE */
         @media (max-width: 600px) {
 
+            /* KILLS + STREAK STAY BIG */
             .kills,
             .streak {
-                font-size: 16px;
-                top: 10px;
+                font-size: 28px;
+                top: 20px;
             }
 
             .kills {
-                left: 8px;
+                left: 10px;
             }
 
             .streak {
-                right: 8px;
+                right: 10px;
             }
 
+            /* ONLY MENU IS SMALL */
             .menu-button {
-                top: 8px;
+                top: 20px;
                 width: 65px;
                 height: 28px;
                 font-size: 12px;
@@ -585,7 +584,7 @@
         <!-- PLAYER -->
         <div class="player" id="player"></div>
 
-        <!-- START / GAME OVER -->
+        <!-- START / GAME OVER MENU -->
         <div class="menu" id="menu">
 
             <div class="menu-title" id="menuTitle">
@@ -685,7 +684,6 @@
     <!-- CONTROLS -->
     <div class="controls">
 
-        <!-- DOWN -->
         <button
             class="control-button"
             onclick="movePlayer(1)"
@@ -693,7 +691,6 @@
             ↓
         </button>
 
-        <!-- SHOOT -->
         <button
             class="control-button shoot-button"
             onclick="shoot()"
@@ -701,7 +698,6 @@
             -
         </button>
 
-        <!-- UP -->
         <button
             class="control-button"
             onclick="movePlayer(-1)"
@@ -768,9 +764,6 @@
 
         const player =
             document.getElementById("player");
-
-        const menuButton =
-            document.getElementById("menuButton");
 
         const skinMenu =
             document.getElementById("skinMenu");
@@ -1395,7 +1388,7 @@
                     }
 
 
-                    /* +500, DOES NOT SET */
+                    /* +500 */
 
                     kills += 500;
 
@@ -1427,7 +1420,7 @@
         );
 
 
-        /* ENTER TO SUBMIT */
+        /* ENTER */
 
         codeInput.addEventListener(
             "keydown",
@@ -1544,7 +1537,7 @@
                 }
 
 
-                /* BULLET COLLISIONS */
+                /* COLLISIONS */
 
                 for (
                     let b =
@@ -1620,8 +1613,6 @@
             );
         }
 
-
-        /* START */
 
         updatePlayer();
         updateSkinMenu();
