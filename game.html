@@ -11,418 +11,404 @@
         }
 
         html {
-            min-height: 100%;
+            min-height: 110%;
         }
 
         body {
             margin: 0;
-            min-height: 180vh;
-            font-family: Arial, sans-serif;
+            min-height: 110vh;
             background: #5f9f55;
+            font-family: Arial, sans-serif;
             overflow-x: hidden;
+            overflow-y: auto;
         }
 
         /* GAME AREA */
-        .game-page {
+        .game {
             position: relative;
-            min-height: 180vh;
-        }
-
-        .game-area {
-            position: relative;
-            height: 120vh;
-            min-height: 700px;
+            width: 100vw;
+            height: 85vh;
+            background: #4f8748;
             overflow: hidden;
-
-            background: linear-gradient(
-                to bottom,
-                #205f2c 0%,
-                #286b32 25%,
-                #3f833f 55%,
-                #5f9f55 100%
-            );
-        }
-
-        /* DARK OVERLAY */
-        .dark-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.25);
-            pointer-events: none;
-            z-index: 10;
-            display: none;
         }
 
         /* PLAYER */
         .player {
             position: absolute;
-
-            width: 55px;
-            height: 55px;
-
-            background: #b8b8b8;
-            border-radius: 4px;
-
-            left: 15%;
+            left: 100px;
             top: 50%;
-
+            width: 60px;
+            height: 60px;
+            background: #777d79;
             transform: translateY(-50%);
-
-            z-index: 5;
+            transition: background 0.2s;
         }
 
-        /* ENEMIES */
+        /* PLAYER AT 25+ STREAK */
+        .player.high-streak {
+            background: #b85f5f;
+        }
+
+        /* GREEN BOXES */
         .enemy {
             position: absolute;
-
-            width: 45px;
-            height: 45px;
-
-            background: #7ed957;
-            border-radius: 3px;
-
-            z-index: 4;
+            width: 50px;
+            height: 50px;
+            background: #8fd18a;
+            transform: translateY(-50%);
         }
 
-        /* BULLETS */
+        /* NORMAL BULLET */
         .bullet {
             position: absolute;
-
             width: 35px;
             height: 12px;
-
-            background: #7a1515;
-            border-radius: 3px;
-
-            z-index: 3;
+            background: #ffd900;
         }
 
-        /* HUD */
+        /* RED BULLET AT 25+ STREAK */
+        .bullet.high-streak {
+            background: #8b1e1e;
+        }
+
+        /* KILLS */
         .kills {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-
-            color: black;
-            font-size: 26px;
-            font-weight: bold;
-
-            z-index: 100;
-        }
-
-        .streak {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-
-            color: black;
-            font-size: 26px;
-            font-weight: bold;
-
-            z-index: 100;
-        }
-
-        .streak.hot {
-            color: red;
-        }
-
-        /* START / GAME OVER */
-        .menu {
             position: absolute;
-            inset: 0;
-
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-
-            z-index: 50;
-        }
-
-        .menu-title {
+            top: 20px;
+            left: 25px;
             color: black;
-            font-size: 48px;
+            font-size: 28px;
             font-weight: bold;
-            margin-bottom: 25px;
+            z-index: 10;
         }
 
-        .start-button,
-        .restart-button {
-            width: 230px;
-            height: 90px;
-
-            border: none;
-            border-radius: 15px;
-
-            background: #4f5a52;
-            color: white;
-
-            font-size: 30px;
-            font-weight: bold;
-
-            cursor: pointer;
-        }
-
-        .start-button:hover,
-        .restart-button:hover {
-            background: #5d6961;
-        }
-
-        /* GAME OVER */
-        .game-over {
+        /* STREAK */
+        .streak {
+            position: absolute;
+            top: 20px;
+            right: 25px;
             color: black;
+            font-size: 28px;
+            font-weight: bold;
+            z-index: 10;
+        }
+
+        /* 25+ STREAK */
+        .streak.high-streak {
+            color: red;
         }
 
         /* CONTROLS */
         .controls {
-            position: fixed;
-
-            left: 50%;
-            bottom: 30px;
-
-            transform: translateX(-50%);
+            position: relative;
+            width: 100%;
+            height: 15vh;
+            min-height: 120px;
+            background: #286b32;
 
             display: flex;
             align-items: center;
-            gap: 12px;
-
-            z-index: 100;
+            justify-content: center;
+            gap: 15px;
         }
 
+        /* UP / DOWN BUTTONS */
         .control-button {
-            width: 65px;
-            height: 65px;
+            width: 80px;
+            height: 80px;
 
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
 
             background: #4f5a52;
-            color: white;
 
-            font-size: 30px;
+            color: white;
+            font-size: 35px;
             font-weight: bold;
 
             cursor: pointer;
+            user-select: none;
+
+            transition:
+                transform 0.1s,
+                background 0.2s;
         }
 
         .control-button:hover {
             background: #5d6961;
         }
 
+        .control-button:active {
+            transform: scale(0.92);
+        }
+
+        /* SHOOT BUTTON */
         .shoot-button {
-            width: 150px;
-            height: 65px;
+            width: 220px;
+            height: 80px;
+            font-size: 50px;
+            font-weight: bold;
         }
 
-        .shoot-line {
-            display: block;
-            font-size: 30px;
-            line-height: 20px;
-        }
-
-        /* CODE BOX */
+        /* CODE AREA */
         .code-area {
             position: fixed;
-
-            right: 25px;
-            bottom: 30px;
+            right: 20px;
+            bottom: 20px;
 
             display: flex;
             align-items: center;
             gap: 8px;
 
-            z-index: 101;
+            z-index: 100;
         }
 
         .code-input {
-            width: 180px;
-            height: 55px;
+            width: 190px;
+            height: 60px;
 
             border: none;
-            outline: none;
-
-            border-radius: 8px;
-
-            padding: 0 15px;
+            border-radius: 12px;
 
             background: #eeeeee;
             color: black;
 
-            font-size: 18px;
+            padding: 0 15px;
+
+            font-size: 20px;
+            font-weight: bold;
+
+            outline: none;
+        }
+
+        .code-input::placeholder {
+            color: #777;
         }
 
         .code-check {
-            width: 55px;
-            height: 55px;
+            width: 60px;
+            height: 60px;
 
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
 
             background: #4f5a52;
             color: white;
 
-            font-size: 28px;
+            font-size: 30px;
             font-weight: bold;
 
             cursor: pointer;
+
+            transition:
+                transform 0.1s,
+                background 0.2s;
         }
 
         .code-check:hover {
             background: #5d6961;
         }
 
-        /* BACK */
-        .back-container {
-            position: relative;
-
-            height: 60vh;
-
-            display: flex;
-            align-items: flex-end;
-            justify-content: flex-start;
-
-            padding: 35px;
+        .code-check:active {
+            transform: scale(0.92);
         }
 
-        .back-button {
-            width: 180px;
-            height: 80px;
+        /* BOTTOM */
+        .bottom {
+            width: 100%;
+            height: 15vh;
+            min-height: 120px;
+            background: #286b32;
+            position: relative;
+        }
 
-            background: #718b78;
-            border-radius: 15px;
+        /* BACK BUTTON */
+        .back-button {
+            position: absolute;
+            left: 10px;
+            bottom: 10px;
+
+            width: 150px;
+            height: 60px;
+
+            background: #4f5a52;
+            border-radius: 12px;
 
             display: flex;
             align-items: center;
             justify-content: center;
 
             color: white;
-            font-size: 26px;
+            font-size: 22px;
             font-weight: bold;
             text-decoration: none;
 
-            transition: transform 0.2s, background 0.2s;
+            cursor: pointer;
+
+            transition:
+                transform 0.2s,
+                background 0.2s;
+
+            z-index: 30;
         }
 
         .back-button:hover {
             transform: scale(1.05);
-            background: #809b87;
+            background: #5d6961;
+        }
+
+        /* MENU */
+        .menu {
+            position: absolute;
+            inset: 0;
+
+            background: rgba(20, 35, 20, 0.55);
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            z-index: 20;
+        }
+
+        /* GAME OVER MENU */
+        .game-over {
+            background: rgba(10, 15, 10, 0.78);
+        }
+
+        .menu-title {
+            color: black;
+            font-size: 50px;
+            font-weight: bold;
+            margin-bottom: 35px;
+        }
+
+        .game-over .menu-title {
+            color: black;
+        }
+
+        /* START / RESTART */
+        .start-button {
+            width: 280px;
+            height: 120px;
+
+            background: #4f5a52;
+            border: none;
+            border-radius: 15px;
+
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .start-button:hover {
+            background: #5d6961;
+            transform: scale(1.05);
+        }
+
+        /* HIDDEN */
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 
 <body>
 
-<div class="game-page">
+    <!-- GAME -->
+    <div class="game" id="game">
 
-    <div class="game-area" id="gameArea">
-
-        <!-- HUD -->
+        <!-- KILLS -->
         <div class="kills" id="kills">
             KILLS: 0
         </div>
 
+        <!-- STREAK -->
         <div class="streak" id="streak">
             STREAK: 0
         </div>
 
-
         <!-- PLAYER -->
         <div class="player" id="player"></div>
 
+        <!-- START / GAME OVER MENU -->
+        <div class="menu" id="menu">
 
-        <!-- START MENU -->
-        <div class="menu" id="startMenu">
-
-            <div class="menu-title">
+            <div class="menu-title" id="menuTitle">
                 GAME
             </div>
 
             <button
                 class="start-button"
                 id="startButton"
+                onclick="startGame()"
             >
                 START
             </button>
 
         </div>
 
+    </div>
 
-        <!-- GAME OVER -->
-        <div
-            class="menu"
-            id="gameOverMenu"
-            style="display: none;"
+
+    <!-- CONTROLS -->
+    <div class="controls">
+
+        <!-- DOWN -->
+        <button
+            class="control-button"
+            onclick="movePlayer(1)"
         >
+            ↓
+        </button>
 
-            <div class="menu-title game-over">
-                GAME OVER
-            </div>
+        <!-- SHOOT -->
+        <button
+            class="control-button shoot-button"
+            onclick="shoot()"
+        >
+            -
+        </button>
 
-            <button
-                class="restart-button"
-                id="restartButton"
-            >
-                RESTART
-            </button>
-
-        </div>
-
-
-        <!-- CONTROLS -->
-        <div class="controls">
-
-            <button
-                class="control-button"
-                id="downButton"
-            >
-                ↓
-            </button>
-
-            <button
-                class="control-button shoot-button"
-                id="shootButton"
-            >
-                <span class="shoot-line">−</span>
-            </button>
-
-            <button
-                class="control-button"
-                id="upButton"
-            >
-                ↑
-            </button>
-
-        </div>
-
-
-        <!-- CODE -->
-        <div class="code-area">
-
-            <input
-                class="code-input"
-                id="codeInput"
-                type="text"
-                placeholder="CODE"
-                autocomplete="off"
-            >
-
-            <button
-                class="code-check"
-                id="codeCheck"
-            >
-                ✓
-            </button>
-
-        </div>
-
-        <div class="dark-overlay" id="darkOverlay"></div>
+        <!-- UP -->
+        <button
+            class="control-button"
+            onclick="movePlayer(-1)"
+        >
+            ↑
+        </button>
 
     </div>
 
 
-    <!-- BACK -->
-    <div class="back-container">
+    <!-- CODE -->
+    <div class="code-area">
 
+        <input
+            class="code-input"
+            id="codeInput"
+            type="text"
+            placeholder="CODE"
+            autocomplete="off"
+        >
+
+        <button
+            class="code-check"
+            id="codeCheck"
+        >
+            ✓
+        </button>
+
+    </div>
+
+
+    <!-- BOTTOM -->
+    <div class="bottom">
+
+        <!-- BACK -->
         <a
             class="back-button"
             href="index.html"
@@ -432,427 +418,593 @@
 
     </div>
 
-</div>
+
+    <script>
+
+        const game =
+            document.getElementById("game");
+
+        const menu =
+            document.getElementById("menu");
+
+        const menuTitle =
+            document.getElementById("menuTitle");
+
+        const startButton =
+            document.getElementById("startButton");
+
+        const killsText =
+            document.getElementById("kills");
+
+        const streakText =
+            document.getElementById("streak");
+
+        const player =
+            document.getElementById("player");
 
 
-<script>
+        let enemies = [];
+        let bullets = [];
 
-    const gameArea = document.getElementById("gameArea");
-    const player = document.getElementById("player");
-
-    const startMenu = document.getElementById("startMenu");
-    const gameOverMenu = document.getElementById("gameOverMenu");
-    const darkOverlay = document.getElementById("darkOverlay");
-
-    const killsText = document.getElementById("kills");
-    const streakText = document.getElementById("streak");
-
-    const startButton = document.getElementById("startButton");
-    const restartButton = document.getElementById("restartButton");
-
-    const upButton = document.getElementById("upButton");
-    const downButton = document.getElementById("downButton");
-    const shootButton = document.getElementById("shootButton");
-
-    const codeInput = document.getElementById("codeInput");
-    const codeCheck = document.getElementById("codeCheck");
+        let gameStarted = false;
+        let enemySpawner = null;
 
 
-    let gameRunning = false;
-
-    let kills = 0;
-    let streak = 0;
-
-    let playerY = 50;
-
-    let enemies = [];
-    let bullets = [];
-
-    let enemyTimer = null;
-    let gameLoop = null;
-
-
-    /* PLAYER MOVEMENT */
-
-    function movePlayer(amount) {
-
-        if (!gameRunning) return;
-
-        playerY += amount;
-
-        /* Keep player away from the very top and bottom */
-        if (playerY < 8) {
-            playerY = 8;
-        }
-
-        if (playerY > 92) {
-            playerY = 92;
-        }
-
-        player.style.top = playerY + "%";
-    }
+        const lanes = [
+            10,
+            18,
+            26,
+            34,
+            42,
+            50,
+            58,
+            66,
+            74,
+            82,
+            90
+        ];
 
 
-    upButton.addEventListener("click", function () {
-        movePlayer(-7);
-    });
-
-    downButton.addEventListener("click", function () {
-        movePlayer(7);
-    });
+        let playerLane = 5;
 
 
-    /* SHOOT */
-
-    shootButton.addEventListener("click", function () {
-
-        if (!gameRunning) return;
-
-        const bullet = document.createElement("div");
-
-        bullet.className = "bullet";
-
-        const playerRect = player.getBoundingClientRect();
-        const areaRect = gameArea.getBoundingClientRect();
-
-        bullet.style.left =
-            (playerRect.right - areaRect.left) + "px";
-
-        bullet.style.top =
-            (playerRect.top - areaRect.top + playerRect.height / 2 - 6) + "px";
-
-        gameArea.appendChild(bullet);
-
-        bullets.push({
-            element: bullet,
-            x: playerRect.right - areaRect.left,
-            y: playerRect.top - areaRect.top + playerRect.height / 2
-        });
-
-    });
-
-
-    /* ENEMIES */
-
-    function createEnemy() {
-
-        if (!gameRunning) return;
-
-        const enemy = document.createElement("div");
-
-        enemy.className = "enemy";
-
-        const areaHeight = gameArea.clientHeight;
-
-        /*
-            Enemies can spawn throughout the player's
-            reachable area, but not directly at the edges.
-        */
-        const minY = areaHeight * 0.08;
-        const maxY = areaHeight * 0.92;
-
-        const y =
-            minY +
-            Math.random() * (maxY - minY);
-
-        enemy.style.left = gameArea.clientWidth + "px";
-        enemy.style.top = y + "px";
-
-        gameArea.appendChild(enemy);
-
-        enemies.push({
-            element: enemy,
-            x: gameArea.clientWidth,
-            y: y,
-            speed: 2 + Math.random() * 1.5
-        });
-    }
-
-
-    /* COLLISION */
-
-    function isColliding(a, b) {
-
-        const ar = a.getBoundingClientRect();
-        const br = b.getBoundingClientRect();
-
-        return !(
-            ar.right < br.left ||
-            ar.left > br.right ||
-            ar.bottom < br.top ||
-            ar.top > br.bottom
+        let kills = Number(
+            localStorage.getItem(
+                "slimeManMillerKills"
+            ) || 0
         );
-    }
 
 
-    /* GAME OVER */
+        let streak = 0;
 
-    function gameOver() {
 
-        gameRunning = false;
-
-        clearInterval(enemyTimer);
-        cancelAnimationFrame(gameLoop);
-
-        streak = 0;
+        killsText.textContent =
+            "KILLS: " + kills;
 
         streakText.textContent =
             "STREAK: " + streak;
 
-        darkOverlay.style.display = "block";
 
-        gameOverMenu.style.display = "flex";
-    }
+        function updatePlayer() {
 
+            playerLane =
+                Math.max(
+                    0,
+                    Math.min(
+                        lanes.length - 1,
+                        playerLane
+                    )
+                );
 
-    /* GAME LOOP */
-
-    function updateGame() {
-
-        if (!gameRunning) return;
-
-        const playerRect =
-            player.getBoundingClientRect();
-
-        /* MOVE BULLETS */
-
-        for (let i = bullets.length - 1; i >= 0; i--) {
-
-            const bullet = bullets[i];
-
-            bullet.x += 8;
-
-            bullet.element.style.left =
-                bullet.x + "px";
+            player.style.top =
+                lanes[playerLane] + "%";
+        }
 
 
-            if (bullet.x > gameArea.clientWidth + 50) {
+        function movePlayer(direction) {
+
+            if (!gameStarted) return;
+
+            playerLane += direction;
+
+            playerLane =
+                Math.max(
+                    0,
+                    Math.min(
+                        lanes.length - 1,
+                        playerLane
+                    )
+                );
+
+            updatePlayer();
+        }
+
+
+        function addKill() {
+
+            kills++;
+
+            killsText.textContent =
+                "KILLS: " + kills;
+
+            localStorage.setItem(
+                "slimeManMillerKills",
+                kills
+            );
+
+
+            streak++;
+
+            streakText.textContent =
+                "STREAK: " + streak;
+
+
+            if (streak >= 25) {
+
+                streakText.classList.add(
+                    "high-streak"
+                );
+
+                player.classList.add(
+                    "high-streak"
+                );
+            }
+        }
+
+
+        function resetStreak() {
+
+            streak = 0;
+
+            streakText.textContent =
+                "STREAK: 0";
+
+            streakText.classList.remove(
+                "high-streak"
+            );
+
+            player.classList.remove(
+                "high-streak"
+            );
+        }
+
+
+        function startGame() {
+
+            clearGame();
+
+            resetStreak();
+
+            gameStarted = true;
+
+
+            playerLane = 5;
+
+            updatePlayer();
+
+
+            menu.classList.remove(
+                "game-over"
+            );
+
+            menu.classList.add(
+                "hidden"
+            );
+
+
+            enemySpawner =
+                setInterval(
+                    createEnemy,
+                    1000
+                );
+        }
+
+
+        function createEnemy() {
+
+            if (!gameStarted) return;
+
+
+            const enemy =
+                document.createElement("div");
+
+            enemy.classList.add(
+                "enemy"
+            );
+
+
+            const randomIndex =
+                Math.floor(
+                    Math.random() *
+                    lanes.length
+                );
+
+
+            const randomLane =
+                lanes[randomIndex];
+
+
+            enemy.style.left =
+                game.clientWidth + "px";
+
+            enemy.style.top =
+                randomLane + "%";
+
+
+            game.appendChild(enemy);
+
+
+            enemies.push({
+
+                element: enemy,
+
+                x: game.clientWidth,
+
+                lane: randomIndex
+
+            });
+        }
+
+
+        function shoot() {
+
+            if (!gameStarted) return;
+
+
+            const bullet =
+                document.createElement("div");
+
+            bullet.classList.add(
+                "bullet"
+            );
+
+
+            if (streak >= 25) {
+
+                bullet.classList.add(
+                    "high-streak"
+                );
+            }
+
+
+            const playerX =
+                100 + 60;
+
+
+            bullet.style.left =
+                playerX + "px";
+
+
+            bullet.style.top =
+                "calc(" +
+                lanes[playerLane] +
+                "% - 6px)";
+
+
+            game.appendChild(bullet);
+
+
+            bullets.push({
+
+                element: bullet,
+
+                x: playerX,
+
+                lane: playerLane
+
+            });
+        }
+
+
+        function gameOver() {
+
+            gameStarted = false;
+
+
+            clearInterval(
+                enemySpawner
+            );
+
+            enemySpawner = null;
+
+
+            enemies.forEach(enemy => {
+
+                enemy.element.remove();
+
+            });
+
+
+            bullets.forEach(bullet => {
 
                 bullet.element.remove();
 
-                bullets.splice(i, 1);
-
-                continue;
-            }
+            });
 
 
-            /* BULLET / ENEMY */
+            enemies = [];
+            bullets = [];
 
-            for (let j = enemies.length - 1; j >= 0; j--) {
 
-                const enemy = enemies[j];
+            resetStreak();
 
-                if (
-                    isColliding(
-                        bullet.element,
-                        enemy.element
-                    )
+
+            menu.classList.remove(
+                "hidden"
+            );
+
+            menu.classList.add(
+                "game-over"
+            );
+
+
+            menuTitle.textContent =
+                "GAME OVER";
+
+
+            startButton.textContent =
+                "RESTART";
+        }
+
+
+        function clearGame() {
+
+            enemies.forEach(enemy => {
+
+                enemy.element.remove();
+
+            });
+
+
+            bullets.forEach(bullet => {
+
+                bullet.element.remove();
+
+            });
+
+
+            enemies = [];
+            bullets = [];
+        }
+
+
+        function gameLoop() {
+
+            if (gameStarted) {
+
+
+                /* MOVE ENEMIES */
+
+                for (
+                    let i =
+                        enemies.length - 1;
+
+                    i >= 0;
+
+                    i--
                 ) {
 
-                    enemy.element.remove();
-                    bullet.element.remove();
-
-                    enemies.splice(j, 1);
-                    bullets.splice(i, 1);
-
-                    kills++;
-                    streak++;
-
-                    killsText.textContent =
-                        "KILLS: " + kills;
-
-                    streakText.textContent =
-                        "STREAK: " + streak;
+                    const enemy =
+                        enemies[i];
 
 
-                    /* STREAK 25+ */
+                    enemy.x -= 4;
 
-                    if (streak >= 25) {
 
-                        streakText.classList.add("hot");
+                    enemy.element.style.left =
+                        enemy.x + "px";
 
-                        player.style.background =
-                            "#c96b6b";
 
-                        document
-                            .querySelectorAll(".bullet")
-                            .forEach(function (b) {
-                                b.style.background =
-                                    "#ff0000";
-                            });
+                    const playerRect =
+                        player.getBoundingClientRect();
 
+                    const enemyRect =
+                        enemy.element
+                            .getBoundingClientRect();
+
+
+                    if (
+                        playerRect.left <
+                            enemyRect.right &&
+
+                        playerRect.right >
+                            enemyRect.left &&
+
+                        playerRect.top <
+                            enemyRect.bottom &&
+
+                        playerRect.bottom >
+                            enemyRect.top
+                    ) {
+
+                        gameOver();
+
+                        break;
                     }
 
-                    break;
+
+                    if (
+                        enemy.x <
+                        -60
+                    ) {
+
+                        enemy.element.remove();
+
+                        enemies.splice(
+                            i,
+                            1
+                        );
+                    }
+                }
+
+
+                /* MOVE BULLETS */
+
+                for (
+                    let i =
+                        bullets.length - 1;
+
+                    i >= 0;
+
+                    i--
+                ) {
+
+                    const bullet =
+                        bullets[i];
+
+
+                    bullet.x += 8;
+
+
+                    bullet.element.style.left =
+                        bullet.x + "px";
+
+
+                    if (
+                        bullet.x >
+                        game.clientWidth
+                    ) {
+
+                        bullet.element.remove();
+
+                        bullets.splice(
+                            i,
+                            1
+                        );
+                    }
+                }
+
+
+                /* BULLET COLLISIONS */
+
+                for (
+                    let b =
+                        bullets.length - 1;
+
+                    b >= 0;
+
+                    b--
+                ) {
+
+                    for (
+                        let e =
+                            enemies.length - 1;
+
+                        e >= 0;
+
+                        e--
+                    ) {
+
+                        const bulletRect =
+                            bullets[b]
+                                .element
+                                .getBoundingClientRect();
+
+
+                        const enemyRect =
+                            enemies[e]
+                                .element
+                                .getBoundingClientRect();
+
+
+                        if (
+                            bulletRect.left <
+                                enemyRect.right &&
+
+                            bulletRect.right >
+                                enemyRect.left &&
+
+                            bulletRect.top <
+                                enemyRect.bottom &&
+
+                            bulletRect.bottom >
+                                enemyRect.top
+                        ) {
+
+
+                            enemies[e]
+                                .element
+                                .remove();
+
+
+                            bullets[b]
+                                .element
+                                .remove();
+
+
+                            enemies.splice(
+                                e,
+                                1
+                            );
+
+                            bullets.splice(
+                                b,
+                                1
+                            );
+
+
+                            addKill();
+
+
+                            break;
+                        }
+                    }
                 }
             }
+
+
+            requestAnimationFrame(
+                gameLoop
+            );
         }
 
 
-        /* MOVE ENEMIES */
+        /* CODE SYSTEM */
 
-        for (let i = enemies.length - 1; i >= 0; i--) {
+        const codeInput =
+            document.getElementById(
+                "codeInput"
+            );
 
-            const enemy = enemies[i];
-
-            enemy.x -= enemy.speed;
-
-            enemy.element.style.left =
-                enemy.x + "px";
+        const codeCheck =
+            document.getElementById(
+                "codeCheck"
+            );
 
 
-            /* PLAYER COLLISION */
+        codeCheck.addEventListener(
+            "click",
+            function() {
 
-            if (
-                isColliding(
-                    player,
-                    enemy.element
-                )
-            ) {
+                const enteredCode =
+                    codeInput.value.trim();
 
-                enemy.element.remove();
+                if (enteredCode === "") {
+                    return;
+                }
 
-                enemies.splice(i, 1);
-
-                gameOver();
-
-                return;
+                codeInput.value = "";
             }
-
-
-            /* ENEMY REACHED LEFT SIDE */
-
-            if (enemy.x < -60) {
-
-                enemy.element.remove();
-
-                enemies.splice(i, 1);
-
-                /*
-                    Missing an enemy resets streak,
-                    but keeps kills.
-                */
-                streak = 0;
-
-                streakText.textContent =
-                    "STREAK: " + streak;
-
-                streakText.classList.remove("hot");
-
-                player.style.background =
-                    "#b8b8b8";
-            }
-        }
-
-
-        gameLoop =
-            requestAnimationFrame(updateGame);
-    }
-
-
-    /* START */
-
-    function startGame() {
-
-        gameRunning = true;
-
-        kills = 0;
-        streak = 0;
-
-        playerY = 50;
-
-        killsText.textContent =
-            "KILLS: 0";
-
-        streakText.textContent =
-            "STREAK: 0";
-
-        streakText.classList.remove("hot");
-
-        player.style.background =
-            "#b8b8b8";
-
-        player.style.top =
-            "50%";
-
-        startMenu.style.display =
-            "none";
-
-        gameOverMenu.style.display =
-            "none";
-
-        darkOverlay.style.display =
-            "none";
-
-
-        /* Clear old objects */
-
-        enemies.forEach(function (enemy) {
-            enemy.element.remove();
-        });
-
-        bullets.forEach(function (bullet) {
-            bullet.element.remove();
-        });
-
-        enemies = [];
-        bullets = [];
-
-
-        clearInterval(enemyTimer);
-
-        enemyTimer = setInterval(
-            createEnemy,
-            1200
         );
 
-        gameLoop =
-            requestAnimationFrame(updateGame);
-    }
+
+        codeInput.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (event.key === "Enter") {
+                    codeCheck.click();
+                }
+
+            }
+        );
 
 
-    startButton.addEventListener(
-        "click",
-        startGame
-    );
+        updatePlayer();
 
-    restartButton.addEventListener(
-        "click",
-        startGame
-    );
+        gameLoop();
 
-
-    /* CODE BUTTON */
-
-    codeCheck.addEventListener("click", function () {
-
-        const code =
-            codeInput.value.trim();
-
-        if (code === "") return;
-
-        /*
-            Code system can be added here.
-            The entered code is currently accepted
-            without changing the game.
-        */
-
-        codeInput.value = "";
-
-    });
-
-
-    /* ENTER TO SUBMIT CODE */
-
-    codeInput.addEventListener("keydown", function (event) {
-
-        if (event.key === "Enter") {
-            codeCheck.click();
-        }
-
-    });
-
-</script>
+    </script>
 
 </body>
 </html>
