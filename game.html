@@ -37,11 +37,20 @@
             position: absolute;
             left: 100px;
             top: 50%;
+
+            /* HITBOX NEVER CHANGES */
             width: 60px;
             height: 60px;
+
             background: #777d79;
+
             transform: translateY(-50%);
             transition: background 0.2s;
+
+            /* PHOTO IS SQUEEZED INTO THE CUBE */
+            background-size: 100% 100%;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         /* 25+ STREAK */
@@ -57,6 +66,14 @@
         /* KIRBY COOKIE */
         .player.kirby-code {
             background: #54206f !important;
+        }
+
+        /* VR CODE PHOTO */
+        .player.vr-code {
+            background-image: url("cube.vr.png") !important;
+            background-size: 100% 100% !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
         }
 
         /* BLACK X */
@@ -124,7 +141,6 @@
             z-index: 10;
         }
 
-        /* 25+ */
         .streak.high-streak {
             color: red;
         }
@@ -143,7 +159,6 @@
             gap: 15px;
         }
 
-        /* UP / DOWN */
         .control-button {
             width: 80px;
             height: 80px;
@@ -303,7 +318,6 @@
             z-index: 20;
         }
 
-        /* GAME OVER */
         .game-over {
             background: rgba(10, 15, 10, 0.78);
         }
@@ -315,11 +329,6 @@
             margin-bottom: 35px;
         }
 
-        .game-over .menu-title {
-            color: black;
-        }
-
-        /* START / RESTART */
         .start-button {
             width: 280px;
             height: 120px;
@@ -361,7 +370,6 @@
 
         <div class="player" id="player"></div>
 
-        <!-- MENU -->
         <div class="menu" id="menu">
 
             <div class="menu-title" id="menuTitle">
@@ -502,8 +510,6 @@
         );
 
 
-        /* CURRENT STREAK */
-
         let streak = 0;
 
 
@@ -567,7 +573,6 @@
                 kills
             );
 
-
             streak++;
 
             streakText.textContent =
@@ -580,21 +585,17 @@
                     "high-streak"
                 );
 
-                /*
-                    Only make player
-                    reddish if no
-                    special code is active.
-                */
-
                 if (
                     !player.classList.contains(
                         "secret-code"
                     ) &&
                     !player.classList.contains(
                         "kirby-code"
+                    ) &&
+                    !player.classList.contains(
+                        "vr-code"
                     )
                 ) {
-
                     player.classList.add(
                         "high-streak"
                     );
@@ -616,20 +617,17 @@
                 "high-streak"
             );
 
-            /*
-                CODE COLORS stay active
-                until page refresh.
-            */
-
             if (
                 !player.classList.contains(
                     "secret-code"
                 ) &&
                 !player.classList.contains(
                     "kirby-code"
+                ) &&
+                !player.classList.contains(
+                    "vr-code"
                 )
             ) {
-
                 player.classList.remove(
                     "high-streak"
                 );
@@ -680,17 +678,14 @@
                 "enemy"
             );
 
-
             const randomIndex =
                 Math.floor(
                     Math.random() *
                     lanes.length
                 );
 
-
             const randomLane =
                 lanes[randomIndex];
-
 
             enemy.style.left =
                 game.clientWidth + "px";
@@ -698,9 +693,7 @@
             enemy.style.top =
                 randomLane + "%";
 
-
             game.appendChild(enemy);
-
 
             enemies.push({
 
@@ -727,7 +720,6 @@
                 "bullet"
             );
 
-
             if (streak >= 25) {
 
                 bullet.classList.add(
@@ -735,23 +727,18 @@
                 );
             }
 
-
             const playerX =
                 100 + 60;
 
-
             bullet.style.left =
                 playerX + "px";
-
 
             bullet.style.top =
                 "calc(" +
                 lanes[playerLane] +
                 "% - 6px)";
 
-
             game.appendChild(bullet);
-
 
             bullets.push({
 
@@ -777,23 +764,18 @@
 
             enemySpawner = null;
 
-
             enemies.forEach(enemy => {
                 enemy.element.remove();
             });
-
 
             bullets.forEach(bullet => {
                 bullet.element.remove();
             });
 
-
             enemies = [];
             bullets = [];
 
-
             resetStreak();
-
 
             menu.classList.remove(
                 "hidden"
@@ -802,7 +784,6 @@
             menu.classList.add(
                 "game-over"
             );
-
 
             menuTitle.textContent =
                 "GAME OVER";
@@ -820,11 +801,9 @@
                 enemy.element.remove();
             });
 
-
             bullets.forEach(bullet => {
                 bullet.element.remove();
             });
-
 
             enemies = [];
             bullets = [];
@@ -887,7 +866,7 @@
                     }
 
 
-                    /* REMOVE OFF SCREEN */
+                    /* OFF SCREEN */
 
                     if (
                         enemy.x < -60
@@ -991,7 +970,6 @@
                                 .element
                                 .remove();
 
-
                             enemies.splice(
                                 e,
                                 1
@@ -1002,7 +980,6 @@
                                 1
                             );
 
-
                             addKill();
 
                             break;
@@ -1010,7 +987,6 @@
                     }
                 }
             }
-
 
             requestAnimationFrame(
                 gameLoop
@@ -1046,14 +1022,12 @@
                     "COOLEST.COOKIE.HTJYXX"
                 ) {
 
-                    /*
-                        No +100.
-                        Only temporary
-                        red + black X.
-                    */
-
                     player.classList.remove(
                         "kirby-code"
+                    );
+
+                    player.classList.remove(
+                        "vr-code"
                     );
 
                     player.classList.remove(
@@ -1077,12 +1051,12 @@
                     "KIRBY.COOKIE.HTJXX"
                 ) {
 
-                    /*
-                        Temporary dark purple.
-                    */
-
                     player.classList.remove(
                         "secret-code"
+                    );
+
+                    player.classList.remove(
+                        "vr-code"
                     );
 
                     player.classList.remove(
@@ -1115,27 +1089,50 @@
                         "high-streak"
                     );
 
-
-                    /*
-                        If a special color
-                        isn't active, use
-                        the normal 25+
-                        player color.
-                    */
-
                     if (
                         !player.classList.contains(
                             "secret-code"
                         ) &&
                         !player.classList.contains(
                             "kirby-code"
+                        ) &&
+                        !player.classList.contains(
+                            "vr-code"
                         )
                     ) {
-
                         player.classList.add(
                             "high-streak"
                         );
                     }
+
+                    codeInput.value = "";
+
+                    return;
+                }
+
+
+                /* VR CODE */
+
+                if (
+                    enteredCode ===
+                    "VR.CODE"
+                ) {
+
+                    player.classList.remove(
+                        "secret-code"
+                    );
+
+                    player.classList.remove(
+                        "kirby-code"
+                    );
+
+                    player.classList.remove(
+                        "high-streak"
+                    );
+
+                    player.classList.add(
+                        "vr-code"
+                    );
 
                     codeInput.value = "";
 
