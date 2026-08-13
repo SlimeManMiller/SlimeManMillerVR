@@ -104,13 +104,14 @@
             height: 15vh;
             min-height: 120px;
             background: #286b32;
+
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 15px;
         }
 
-        /* CONTROL BUTTONS */
+        /* UP / DOWN BUTTONS */
         .control-button {
             width: 80px;
             height: 80px;
@@ -138,6 +139,12 @@
 
         .control-button:active {
             transform: scale(0.92);
+        }
+
+        /* SHOOT BUTTON */
+        .shoot-button {
+            width: 220px;
+            height: 80px;
         }
 
         /* BOTTOM */
@@ -171,6 +178,7 @@
             text-decoration: none;
 
             cursor: pointer;
+
             transition:
                 transform 0.2s,
                 background 0.2s;
@@ -293,7 +301,7 @@
 
         <!-- SHOOT -->
         <button
-            class="control-button"
+            class="control-button shoot-button"
             onclick="shoot()"
         >
         </button>
@@ -353,7 +361,7 @@
         let gameStarted = false;
         let enemySpawner = null;
 
-        /* PLAYER Y POSITION */
+        /* PLAYER POSITION */
         let playerY = 50;
 
 
@@ -365,7 +373,7 @@
         );
 
 
-        /* STREAK */
+        /* CURRENT STREAK */
         let streak = 0;
 
 
@@ -379,11 +387,16 @@
         /* UPDATE PLAYER */
         function updatePlayer() {
 
+            /*
+                PLAYER CAN MOVE
+                ONLY BETWEEN 10% AND 90%
+            */
+
             playerY =
                 Math.max(
-                    5,
+                    10,
                     Math.min(
-                        95,
+                        90,
                         playerY
                     )
                 );
@@ -399,7 +412,6 @@
             if (!gameStarted) return;
 
             /*
-                direction:
                 -1 = UP
                  1 = DOWN
             */
@@ -426,7 +438,7 @@
             );
 
 
-            /* CURRENT STREAK */
+            /* STREAK */
             streak++;
 
             streakText.textContent =
@@ -474,7 +486,7 @@
 
             gameStarted = true;
 
-            /* PLAYER START POSITION */
+            /* PLAYER STARTS IN MIDDLE */
             playerY = 50;
 
             updatePlayer();
@@ -507,18 +519,23 @@
             const enemy =
                 document.createElement("div");
 
-            enemy.classList.add("enemy");
+            enemy.classList.add(
+                "enemy"
+            );
 
 
             /*
-                RANDOM HEIGHT
+                GREEN BOXES CAN APPEAR
+                WHERE THE PLAYER CAN GO.
 
-                Between 25% and 75%
-                of the game area.
+                TOP 10% = NO
+                MIDDLE 80% = YES
+                BOTTOM 10% = NO
             */
 
-            const minY = 25;
-            const maxY = 75;
+            const minY = 10;
+            const maxY = 90;
+
 
             const randomY =
                 Math.random() *
