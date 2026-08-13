@@ -44,14 +44,19 @@
             transition: background 0.2s;
         }
 
-        /* PLAYER AT 25+ STREAK */
+        /* 25+ STREAK */
         .player.high-streak {
             background: #b85f5f;
         }
 
-        /* PERMANENT SECRET CODE PLAYER */
+        /* COOLEST COOKIE */
         .player.secret-code {
             background: red !important;
+        }
+
+        /* KIRBY COOKIE */
+        .player.kirby-code {
+            background: #54206f !important;
         }
 
         /* BLACK X */
@@ -59,15 +64,11 @@
         .player.secret-code::after {
             content: "";
             position: absolute;
-
             left: 50%;
             top: 50%;
-
             width: 70px;
             height: 8px;
-
             background: black;
-
             transform-origin: center;
         }
 
@@ -88,7 +89,7 @@
             transform: translateY(-50%);
         }
 
-        /* NORMAL BULLET */
+        /* BULLET */
         .bullet {
             position: absolute;
             width: 35px;
@@ -96,7 +97,7 @@
             background: #ffd900;
         }
 
-        /* RED BULLET AT 25+ STREAK */
+        /* RED BULLET AT 25+ */
         .bullet.high-streak {
             background: #8b1e1e;
         }
@@ -123,7 +124,7 @@
             z-index: 10;
         }
 
-        /* 25+ STREAK */
+        /* 25+ */
         .streak.high-streak {
             color: red;
         }
@@ -142,7 +143,7 @@
             gap: 15px;
         }
 
-        /* UP / DOWN BUTTONS */
+        /* UP / DOWN */
         .control-button {
             width: 80px;
             height: 80px;
@@ -172,7 +173,7 @@
             transform: scale(0.92);
         }
 
-        /* SHOOT BUTTON */
+        /* SHOOT */
         .shoot-button {
             width: 220px;
             height: 80px;
@@ -252,7 +253,7 @@
             position: relative;
         }
 
-        /* BACK BUTTON */
+        /* BACK */
         .back-button {
             position: absolute;
             left: 10px;
@@ -302,7 +303,7 @@
             z-index: 20;
         }
 
-        /* GAME OVER MENU */
+        /* GAME OVER */
         .game-over {
             background: rgba(10, 15, 10, 0.78);
         }
@@ -339,7 +340,6 @@
             transform: scale(1.05);
         }
 
-        /* HIDDEN */
         .hidden {
             display: none;
         }
@@ -351,20 +351,17 @@
     <!-- GAME -->
     <div class="game" id="game">
 
-        <!-- KILLS -->
         <div class="kills" id="kills">
             KILLS: 0
         </div>
 
-        <!-- STREAK -->
         <div class="streak" id="streak">
             STREAK: 0
         </div>
 
-        <!-- PLAYER -->
         <div class="player" id="player"></div>
 
-        <!-- START / GAME OVER MENU -->
+        <!-- MENU -->
         <div class="menu" id="menu">
 
             <div class="menu-title" id="menuTitle">
@@ -387,7 +384,6 @@
     <!-- CONTROLS -->
     <div class="controls">
 
-        <!-- DOWN -->
         <button
             class="control-button"
             onclick="movePlayer(1)"
@@ -395,7 +391,6 @@
             ↓
         </button>
 
-        <!-- SHOOT -->
         <button
             class="control-button shoot-button"
             onclick="shoot()"
@@ -403,7 +398,6 @@
             -
         </button>
 
-        <!-- UP -->
         <button
             class="control-button"
             onclick="movePlayer(-1)"
@@ -438,7 +432,6 @@
     <!-- BOTTOM -->
     <div class="bottom">
 
-        <!-- BACK -->
         <a
             class="back-button"
             href="index.html"
@@ -480,6 +473,8 @@
         let enemySpawner = null;
 
 
+        /* PLAYER LANES */
+
         const lanes = [
             10,
             18,
@@ -498,7 +493,7 @@
         let playerLane = 5;
 
 
-        /* LOAD PERMANENT KILLS */
+        /* PERMANENT KILLS */
 
         let kills = Number(
             localStorage.getItem(
@@ -510,24 +505,6 @@
         /* CURRENT STREAK */
 
         let streak = 0;
-
-
-        /* CHECK PERMANENT SECRET CODE */
-
-        let secretCodeUsed =
-            localStorage.getItem(
-                "slimeManMillerSecretCodeUsed"
-            ) === "true";
-
-
-        /* RESTORE SECRET CODE */
-
-        if (secretCodeUsed) {
-
-            player.classList.add(
-                "secret-code"
-            );
-        }
 
 
         killsText.textContent =
@@ -597,17 +574,31 @@
                 "STREAK: " + streak;
 
 
-            /* 25+ STREAK */
-
             if (streak >= 25) {
 
                 streakText.classList.add(
                     "high-streak"
                 );
 
-                player.classList.add(
-                    "high-streak"
-                );
+                /*
+                    Only make player
+                    reddish if no
+                    special code is active.
+                */
+
+                if (
+                    !player.classList.contains(
+                        "secret-code"
+                    ) &&
+                    !player.classList.contains(
+                        "kirby-code"
+                    )
+                ) {
+
+                    player.classList.add(
+                        "high-streak"
+                    );
+                }
             }
         }
 
@@ -626,11 +617,18 @@
             );
 
             /*
-                DO NOT REMOVE
-                SECRET CODE EFFECT
+                CODE COLORS stay active
+                until page refresh.
             */
 
-            if (!secretCodeUsed) {
+            if (
+                !player.classList.contains(
+                    "secret-code"
+                ) &&
+                !player.classList.contains(
+                    "kirby-code"
+                )
+            ) {
 
                 player.classList.remove(
                     "high-streak"
@@ -649,13 +647,9 @@
 
             gameStarted = true;
 
-
-            /* PLAYER STARTS IN MIDDLE */
-
             playerLane = 5;
 
             updatePlayer();
-
 
             menu.classList.remove(
                 "game-over"
@@ -665,7 +659,6 @@
                 "hidden"
             );
 
-
             enemySpawner =
                 setInterval(
                     createEnemy,
@@ -674,12 +667,11 @@
         }
 
 
-        /* CREATE GREEN BOX */
+        /* CREATE ENEMY */
 
         function createEnemy() {
 
             if (!gameStarted) return;
-
 
             const enemy =
                 document.createElement("div");
@@ -728,7 +720,6 @@
 
             if (!gameStarted) return;
 
-
             const bullet =
                 document.createElement("div");
 
@@ -736,11 +727,6 @@
                 "bullet"
             );
 
-
-            /*
-                NORMAL = YELLOW
-                25+ = DARK RED
-            */
 
             if (streak >= 25) {
 
@@ -785,7 +771,6 @@
 
             gameStarted = false;
 
-
             clearInterval(
                 enemySpawner
             );
@@ -794,16 +779,12 @@
 
 
             enemies.forEach(enemy => {
-
                 enemy.element.remove();
-
             });
 
 
             bullets.forEach(bullet => {
-
                 bullet.element.remove();
-
             });
 
 
@@ -811,12 +792,8 @@
             bullets = [];
 
 
-            /* STREAK RESETS */
-
             resetStreak();
 
-
-            /* SHOW GAME OVER */
 
             menu.classList.remove(
                 "hidden"
@@ -830,7 +807,6 @@
             menuTitle.textContent =
                 "GAME OVER";
 
-
             startButton.textContent =
                 "RESTART";
         }
@@ -841,16 +817,12 @@
         function clearGame() {
 
             enemies.forEach(enemy => {
-
                 enemy.element.remove();
-
             });
 
 
             bullets.forEach(bullet => {
-
                 bullet.element.remove();
-
             });
 
 
@@ -879,9 +851,7 @@
                     const enemy =
                         enemies[i];
 
-
                     enemy.x -= 4;
-
 
                     enemy.element.style.left =
                         enemy.x + "px";
@@ -920,8 +890,7 @@
                     /* REMOVE OFF SCREEN */
 
                     if (
-                        enemy.x <
-                        -60
+                        enemy.x < -60
                     ) {
 
                         enemy.element.remove();
@@ -948,9 +917,7 @@
                     const bullet =
                         bullets[i];
 
-
                     bullet.x += 8;
-
 
                     bullet.element.style.left =
                         bullet.x + "px";
@@ -996,7 +963,6 @@
                                 .element
                                 .getBoundingClientRect();
 
-
                         const enemyRect =
                             enemies[e]
                                 .element
@@ -1021,7 +987,6 @@
                                 .element
                                 .remove();
 
-
                             bullets[b]
                                 .element
                                 .remove();
@@ -1037,8 +1002,6 @@
                                 1
                             );
 
-
-                            /* +1 KILL +1 STREAK */
 
                             addKill();
 
@@ -1076,64 +1039,69 @@
                     codeInput.value.trim();
 
 
-                /* COOLEST COOKIE CODE */
+                /* COOLEST COOKIE */
 
                 if (
                     enteredCode ===
                     "COOLEST.COOKIE.HTJYXX"
                 ) {
 
-                    if (secretCodeUsed) {
-
-                        codeInput.value =
-                            "CODE USED";
-
-                        return;
-                    }
-
-
                     /*
-                        MARK CODE AS USED
-                        PERMANENTLY
+                        No +100.
+                        Only temporary
+                        red + black X.
                     */
 
-                    secretCodeUsed = true;
-
-                    localStorage.setItem(
-                        "slimeManMillerSecretCodeUsed",
-                        "true"
+                    player.classList.remove(
+                        "kirby-code"
                     );
 
-
-                    /*
-                        +100 KILLS
-                    */
-
-                    kills += 100;
-
-                    killsText.textContent =
-                        "KILLS: " + kills;
-
-                    localStorage.setItem(
-                        "slimeManMillerKills",
-                        kills
+                    player.classList.remove(
+                        "high-streak"
                     );
-
-
-                    /*
-                        PERMANENT RED
-                        PLAYER + BLACK X
-                    */
 
                     player.classList.add(
                         "secret-code"
                     );
+
+                    codeInput.value = "";
+
+                    return;
+                }
+
+
+                /* KIRBY COOKIE */
+
+                if (
+                    enteredCode ===
+                    "KIRBY.COOKIE.HTJXX"
+                ) {
+
+                    /*
+                        Temporary dark purple.
+                    */
+
+                    player.classList.remove(
+                        "secret-code"
+                    );
+
+                    player.classList.remove(
+                        "high-streak"
+                    );
+
+                    player.classList.add(
+                        "kirby-code"
+                    );
+
+                    codeInput.value = "";
+
+                    return;
                 }
 
 
                 /* STREAK CODE */
 
-                else if (
+                if (
                     enteredCode ===
                     "STREAK.CODE"
                 ) {
@@ -1147,26 +1115,37 @@
                         "high-streak"
                     );
 
-                    player.classList.add(
-                        "high-streak"
-                    );
-                }
 
+                    /*
+                        If a special color
+                        isn't active, use
+                        the normal 25+
+                        player color.
+                    */
 
-                /*
-                    CLEAR INPUT
-                    EXCEPT CODE USED
-                */
+                    if (
+                        !player.classList.contains(
+                            "secret-code"
+                        ) &&
+                        !player.classList.contains(
+                            "kirby-code"
+                        )
+                    ) {
 
-                if (
-                    enteredCode !==
-                    "COOLEST.COOKIE.HTJYXX"
-                    || !secretCodeUsed
-                ) {
+                        player.classList.add(
+                            "high-streak"
+                        );
+                    }
 
                     codeInput.value = "";
+
+                    return;
                 }
 
+
+                /* UNKNOWN CODE */
+
+                codeInput.value = "";
             }
         );
 
@@ -1178,16 +1157,14 @@
             function(event) {
 
                 if (event.key === "Enter") {
-
                     codeCheck.click();
-
                 }
 
             }
         );
 
 
-        /* START LOOP */
+        /* START */
 
         updatePlayer();
 
