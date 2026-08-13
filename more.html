@@ -40,11 +40,38 @@
             text-align: center;
         }
 
-        /* SECTIONS */
-        .section {
-            margin-top: 70px;
+        /* LEAKS BUTTON */
+        .leaks-button {
+            margin-top: 45px;
+            margin-bottom: 70px;
+
+            width: 230px;
+            height: 75px;
+
+            background: #4f5a52;
+            border-radius: 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+
+            text-decoration: none;
+
+            transition:
+                transform 0.2s,
+                background 0.2s;
         }
 
+        .leaks-button:hover {
+            transform: scale(1.05);
+            background: #5d6961;
+        }
+
+        /* SECTION TITLES */
         .section-title {
             color: black;
             font-size: 30px;
@@ -71,17 +98,17 @@
             text-decoration: underline;
         }
 
-        /* BUTTONS */
+        /* ALL VIDS + GAME */
         .extra-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
             width: 230px;
             height: 75px;
 
             background: #4f5a52;
             border-radius: 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
             color: white;
             font-size: 24px;
@@ -99,15 +126,14 @@
             background: #5d6961;
         }
 
-        /* LEAKS */
-        .leaks-button {
-            margin-top: 45px;
-            margin-bottom: 40px;
-        }
-
         /* ALL VIDS */
         .all-vids-button {
             margin-top: 45px;
+        }
+
+        /* GAME */
+        .game-button {
+            margin-top: 25px;
         }
 
         /* BACK */
@@ -155,118 +181,123 @@
         </div>
 
 
+        <!-- LEAKS -->
+        <a
+            class="leaks-button"
+            href="leaks.html"
+        >
+            LEAKS
+        </a>
+
+
         <!-- VIDS -->
-        <div class="section">
-
-            <div class="section-title">
-                VIDS
-            </div>
+        <div class="section-title">
+            VIDS
+        </div>
 
 
-            <!-- ZOMBONK -->
-            <div class="section-title">
-                ZOMBONK:
-            </div>
+        <!-- ZOMBONK -->
+        <div class="section-title">
+            ZOMBONK:
+        </div>
 
-            <div class="video-list">
+        <div class="video-list">
 
-                <a
-                    class="video-link"
-                    href="https://www.youtube.com/shorts/YnmFtuGGwk4"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    CRATE OPENING
-                </a>
-
-                <a
-                    class="video-link"
-                    href="https://www.youtube.com/shorts/-HAgIho_WFY"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    CRATE OPENING
-                </a>
-
-                <a
-                    class="video-link"
-                    href="https://www.youtube.com/shorts/ZpnlF6DAaVg"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    CRATE OPENING
-                </a>
-
-                <a
-                    class="video-link"
-                    href="https://www.youtube.com/shorts/WKmU6h5cUc4"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    CRATE OPENING
-                </a>
-
-                <a
-                    class="video-link"
-                    href="https://www.youtube.com/shorts/buUq9XT1tIU"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    CRATE OPENING
-                </a>
-
-                <a
-                    class="video-link"
-                    href="https://www.youtube.com/shorts/1lCRlJJUO38"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    RAIDING IN ZOMBONK
-                </a>
-
-            </div>
-
-
-            <!-- OTHER -->
-            <div
-                class="section-title"
-                style="margin-top: 70px;"
-            >
-                OTHER:
-            </div>
-
-            <div class="video-list">
-
-                <a
-                    class="video-link"
-                    href="https://www.youtube.com/shorts/ljIrZdlEzJs"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    CHOOSE YOUR CHARACTER
-                </a>
-
-            </div>
-
-
-            <!-- LEAKS -->
             <a
-                class="extra-button leaks-button"
-                href="leaks.html"
+                class="video-link"
+                href="https://www.youtube.com/shorts/YnmFtuGGwk4"
+                target="_blank"
+                rel="noopener noreferrer"
             >
-                LEAKS
+                CRATE OPENING
             </a>
 
-
-            <!-- ALL VIDS -->
             <a
-                class="extra-button all-vids-button"
-                href="allvids.html"
+                class="video-link"
+                href="https://www.youtube.com/shorts/-HAgIho_WFY"
+                target="_blank"
+                rel="noopener noreferrer"
             >
-                ALL VIDS
+                CRATE OPENING
+            </a>
+
+            <a
+                class="video-link"
+                href="https://www.youtube.com/shorts/ZpnlF6DAaVg"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                CRATE OPENING
+            </a>
+
+            <a
+                class="video-link"
+                href="https://www.youtube.com/shorts/WKmU6h5cUc4"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                CRATE OPENING
+            </a>
+
+            <a
+                class="video-link"
+                href="https://www.youtube.com/shorts/buUq9XT1tIU"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                CRATE OPENING
+            </a>
+
+            <a
+                class="video-link"
+                href="https://www.youtube.com/shorts/1lCRlJJUO38"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                RAIDING IN ZOMBONK
             </a>
 
         </div>
+
+
+        <!-- OTHER -->
+        <div
+            class="section-title"
+            style="margin-top: 70px;"
+        >
+            OTHER:
+        </div>
+
+        <div class="video-list">
+
+            <a
+                class="video-link"
+                href="https://www.youtube.com/shorts/ljIrZdlEzJs"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                CHOOSE YOUR CHARACTER
+            </a>
+
+        </div>
+
+
+        <!-- ALL VIDS -->
+        <a
+            class="extra-button all-vids-button"
+            href="allvids.html"
+        >
+            ALL VIDS
+        </a>
+
+
+        <!-- GAME -->
+        <a
+            class="extra-button game-button"
+            href="game.html"
+        >
+            GAME
+        </a>
 
 
         <!-- BACK -->
