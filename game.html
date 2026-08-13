@@ -24,6 +24,7 @@
             overflow-y: auto;
         }
 
+        /* GAME */
         .game {
             position: relative;
             width: 100vw;
@@ -102,10 +103,10 @@
         /* KILLS */
         .kills {
             position: absolute;
-            top: 20px;
-            left: 25px;
+            top: 12px;
+            left: 15px;
             color: black;
-            font-size: 28px;
+            font-size: 18px;
             font-weight: bold;
             z-index: 10;
         }
@@ -113,16 +114,44 @@
         /* STREAK */
         .streak {
             position: absolute;
-            top: 20px;
-            right: 25px;
+            top: 12px;
+            right: 15px;
             color: black;
-            font-size: 28px;
+            font-size: 18px;
             font-weight: bold;
             z-index: 10;
         }
 
         .streak.high-streak {
             color: red;
+        }
+
+        /* MENU BUTTON */
+        .menu-button {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+
+            width: 75px;
+            height: 32px;
+
+            background: #4f5a52;
+            color: white;
+
+            border: none;
+            border-radius: 7px;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            cursor: pointer;
+            z-index: 15;
+        }
+
+        .menu-button:hover {
+            background: #5d6961;
+            transform: translateX(-50%);
         }
 
         /* CONTROLS */
@@ -139,15 +168,20 @@
             gap: 15px;
         }
 
+        /* UP / DOWN */
         .control-button {
             width: 80px;
             height: 80px;
+
             border: none;
             border-radius: 12px;
+
             background: #4f5a52;
+
             color: white;
             font-size: 35px;
             font-weight: bold;
+
             cursor: pointer;
             user-select: none;
 
@@ -164,6 +198,7 @@
             transform: scale(0.92);
         }
 
+        /* SHOOT */
         .shoot-button {
             width: 220px;
             height: 80px;
@@ -234,33 +269,50 @@
             transform: scale(0.92);
         }
 
-        /* MENU BUTTON */
-        .menu-button {
+        /* START / GAME OVER MENU */
+        .menu {
             position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            inset: 0;
 
-            width: 150px;
-            height: 55px;
+            background: rgba(20, 35, 20, 0.55);
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            z-index: 20;
+        }
+
+        .game-over {
+            background: rgba(10, 15, 10, 0.78);
+        }
+
+        .menu-title {
+            color: black;
+            font-size: 50px;
+            font-weight: bold;
+            margin-bottom: 35px;
+        }
+
+        .start-button {
+            width: 280px;
+            height: 120px;
 
             background: #4f5a52;
-            color: white;
-
             border: none;
-            border-radius: 12px;
+            border-radius: 15px;
 
-            font-size: 24px;
+            color: white;
+            font-size: 32px;
             font-weight: bold;
 
             cursor: pointer;
-
-            z-index: 15;
         }
 
-        .menu-button:hover {
+        .start-button:hover {
             background: #5d6961;
-            transform: translateX(-50%) scale(1.05);
+            transform: scale(1.05);
         }
 
         /* SKIN MENU */
@@ -280,14 +332,14 @@
 
         .skin-title {
             color: black;
-            font-size: 42px;
+            font-size: 25px;
             font-weight: bold;
-            margin-bottom: 35px;
+            margin-bottom: 15px;
         }
 
         .skins {
             display: flex;
-            gap: 25px;
+            gap: 7px;
             align-items: flex-start;
         }
 
@@ -295,24 +347,24 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 5px;
         }
 
         .skin-square {
-            width: 90px;
-            height: 90px;
+            width: 45px;
+            height: 45px;
             border: none;
-            border-radius: 10px;
+            border-radius: 6px;
             cursor: pointer;
             position: relative;
         }
 
-        /* BLUE 500 KILLS SKIN */
+        /* BLUE */
         .skin-blue {
             background: #00a8f3;
         }
 
-        /* LOCKED SKINS */
+        /* LOCKED */
         .skin-locked {
             background: #3d4140;
             cursor: not-allowed;
@@ -327,8 +379,8 @@
             left: 50%;
             top: 50%;
 
-            width: 75px;
-            height: 8px;
+            width: 38px;
+            height: 5px;
 
             background: red;
         }
@@ -343,23 +395,25 @@
 
         .skin-label {
             color: black;
-            font-size: 18px;
+            font-size: 10px;
             font-weight: bold;
+            white-space: nowrap;
         }
 
+        /* BACK IN MENU */
         .skin-back {
-            margin-top: 35px;
+            margin-top: 15px;
 
-            width: 180px;
-            height: 65px;
+            width: 90px;
+            height: 35px;
 
             background: #4f5a52;
             color: white;
 
             border: none;
-            border-radius: 12px;
+            border-radius: 7px;
 
-            font-size: 24px;
+            font-size: 14px;
             font-weight: bold;
 
             cursor: pointer;
@@ -369,6 +423,7 @@
             background: #5d6961;
         }
 
+        /* HIDDEN */
         .hidden {
             display: none !important;
         }
@@ -417,75 +472,117 @@
             background: #5d6961;
         }
 
-        /* START MENU */
-        .menu {
-            position: absolute;
-            inset: 0;
+        /* MOBILE */
+        @media (max-width: 600px) {
 
-            background: rgba(20, 35, 20, 0.55);
+            .kills,
+            .streak {
+                font-size: 16px;
+                top: 10px;
+            }
 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            .kills {
+                left: 8px;
+            }
 
-            z-index: 20;
-        }
+            .streak {
+                right: 8px;
+            }
 
-        .game-over {
-            background: rgba(10, 15, 10, 0.78);
-        }
+            .menu-button {
+                top: 8px;
+                width: 65px;
+                height: 28px;
+                font-size: 12px;
+            }
 
-        .menu-title {
-            color: black;
-            font-size: 50px;
-            font-weight: bold;
-            margin-bottom: 35px;
-        }
+            .control-button {
+                width: 60px;
+                height: 60px;
+                font-size: 28px;
+            }
 
-        .start-button {
-            width: 280px;
-            height: 120px;
+            .shoot-button {
+                width: 150px;
+                height: 60px;
+                font-size: 38px;
+            }
 
-            background: #4f5a52;
-            border: none;
-            border-radius: 15px;
+            .code-area {
+                right: 8px;
+                bottom: 8px;
+            }
 
-            color: white;
-            font-size: 32px;
-            font-weight: bold;
+            .code-input {
+                width: 145px;
+                height: 45px;
+                font-size: 15px;
+            }
 
-            cursor: pointer;
-        }
+            .code-check {
+                width: 45px;
+                height: 45px;
+                font-size: 23px;
+            }
 
-        .start-button:hover {
-            background: #5d6961;
-            transform: scale(1.05);
+            .skins {
+                gap: 5px;
+            }
+
+            .skin-square {
+                width: 38px;
+                height: 38px;
+            }
+
+            .skin-locked::before,
+            .skin-locked::after {
+                width: 32px;
+                height: 4px;
+            }
+
+            .skin-label {
+                font-size: 8px;
+            }
+
+            .skin-title {
+                font-size: 22px;
+                margin-bottom: 12px;
+            }
+
+            .skin-back {
+                width: 80px;
+                height: 32px;
+                font-size: 13px;
+            }
         }
     </style>
 </head>
 
 <body>
 
+    <!-- GAME -->
     <div class="game" id="game">
 
+        <!-- KILLS -->
         <div class="kills" id="kills">
             KILLS: 0
         </div>
 
-        <div class="streak" id="streak">
-            STREAK: 0
-        </div>
-
-        <!-- ONLY APPEARS AT 500+ KILLS -->
+        <!-- MENU -->
         <button
-            class="menu-button hidden"
+            class="menu-button"
             id="menuButton"
             onclick="openSkinMenu()"
         >
             MENU
         </button>
 
+        <!-- STREAK -->
+        <div class="streak" id="streak">
+            STREAK: 0
+        </div>
+
+        <!-- PLAYER -->
         <div class="player" id="player"></div>
 
         <!-- START / GAME OVER -->
@@ -517,21 +614,25 @@
 
             <div class="skins">
 
-                <!-- BLUE -->
+                <!-- 500 KILLS -->
                 <div class="skin-option">
 
                     <button
                         class="skin-square skin-blue"
+                        id="blueSkinButton"
                         onclick="selectBlueSkin()"
                     ></button>
 
-                    <div class="skin-label">
+                    <div
+                        class="skin-label"
+                        id="blueSkinLabel"
+                    >
                         500 KILLS
                     </div>
 
                 </div>
 
-                <!-- LOCKED 2 -->
+                <!-- LOCKED -->
                 <div class="skin-option">
                     <button
                         class="skin-square skin-locked"
@@ -539,7 +640,6 @@
                     ></button>
                 </div>
 
-                <!-- LOCKED 3 -->
                 <div class="skin-option">
                     <button
                         class="skin-square skin-locked"
@@ -547,7 +647,6 @@
                     ></button>
                 </div>
 
-                <!-- LOCKED 4 -->
                 <div class="skin-option">
                     <button
                         class="skin-square skin-locked"
@@ -555,7 +654,6 @@
                     ></button>
                 </div>
 
-                <!-- LOCKED 5 -->
                 <div class="skin-option">
                     <button
                         class="skin-square skin-locked"
@@ -563,7 +661,6 @@
                     ></button>
                 </div>
 
-                <!-- LOCKED 6 -->
                 <div class="skin-option">
                     <button
                         class="skin-square skin-locked"
@@ -588,6 +685,7 @@
     <!-- CONTROLS -->
     <div class="controls">
 
+        <!-- DOWN -->
         <button
             class="control-button"
             onclick="movePlayer(1)"
@@ -595,6 +693,7 @@
             ↓
         </button>
 
+        <!-- SHOOT -->
         <button
             class="control-button shoot-button"
             onclick="shoot()"
@@ -602,6 +701,7 @@
             -
         </button>
 
+        <!-- UP -->
         <button
             class="control-button"
             onclick="movePlayer(-1)"
@@ -633,6 +733,7 @@
     </div>
 
 
+    <!-- BOTTOM -->
     <div class="bottom">
 
         <a
@@ -679,6 +780,12 @@
 
         const codeCheck =
             document.getElementById("codeCheck");
+
+        const blueSkinButton =
+            document.getElementById("blueSkinButton");
+
+        const blueSkinLabel =
+            document.getElementById("blueSkinLabel");
 
 
         let enemies = [];
@@ -730,26 +837,48 @@
             "STREAK: " + streak;
 
 
-        /* MENU ONLY AFTER 500 KILLS */
+        /* UPDATE 500 KILLS BOX */
 
-        function updateMenuButton() {
+        function updateSkinMenu() {
 
             if (kills >= 500) {
 
-                menuButton.classList.remove(
-                    "hidden"
+                blueSkinButton.classList.remove(
+                    "skin-locked"
                 );
+
+                blueSkinButton.classList.add(
+                    "skin-blue"
+                );
+
+                blueSkinButton.disabled = false;
+
+                blueSkinLabel.textContent =
+                    "500 KILLS";
+
+                blueSkinButton.onclick =
+                    selectBlueSkin;
 
             } else {
 
-                menuButton.classList.add(
-                    "hidden"
+                blueSkinButton.classList.remove(
+                    "skin-blue"
                 );
+
+                blueSkinButton.classList.add(
+                    "skin-locked"
+                );
+
+                blueSkinButton.disabled = true;
+
+                blueSkinLabel.textContent = "";
+
+                blueSkinButton.onclick = null;
             }
         }
 
 
-        updateMenuButton();
+        updateSkinMenu();
 
 
         /* UPDATE PLAYER */
@@ -805,7 +934,7 @@
                 kills
             );
 
-            updateMenuButton();
+            updateSkinMenu();
 
 
             streak++;
@@ -906,8 +1035,6 @@
 
         function openSkinMenu() {
 
-            if (kills < 500) return;
-
             gameStarted = false;
 
             clearInterval(
@@ -919,6 +1046,8 @@
             clearGame();
 
             resetStreak();
+
+            updateSkinMenu();
 
             skinMenu.classList.remove(
                 "hidden"
@@ -1237,9 +1366,7 @@
                 }
 
 
-                /* 500 KILL CODE
-                   +500, NOT SET TO 500
-                   ONE USE ONLY */
+                /* 500 KILL CODE */
 
                 if (
                     enteredCode ===
@@ -1268,33 +1395,24 @@
                     }
 
 
-                    /* ADD 500 TO CURRENT KILLS */
+                    /* +500, DOES NOT SET */
 
                     kills += 500;
 
-
                     killsText.textContent =
                         "KILLS: " + kills;
-
 
                     localStorage.setItem(
                         "slimeManMillerKills",
                         kills
                     );
 
-
-                    /* MARK CODE AS USED */
-
                     localStorage.setItem(
                         "500KillCodeUsed",
                         "true"
                     );
 
-
-                    /* UPDATE 500+ MENU */
-
-                    updateMenuButton();
-
+                    updateSkinMenu();
 
                     codeInput.value = "";
 
@@ -1316,9 +1434,7 @@
             function(event) {
 
                 if (event.key === "Enter") {
-
                     codeCheck.click();
-
                 }
 
             }
@@ -1331,7 +1447,7 @@
 
             if (gameStarted) {
 
-                /* MOVE ENEMIES */
+                /* ENEMIES */
 
                 for (
                     let i =
@@ -1393,7 +1509,7 @@
                 }
 
 
-                /* MOVE BULLETS */
+                /* BULLETS */
 
                 for (
                     let i =
@@ -1508,7 +1624,7 @@
         /* START */
 
         updatePlayer();
-
+        updateSkinMenu();
         gameLoop();
 
     </script>
