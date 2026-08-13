@@ -104,6 +104,40 @@
             height: 15vh;
             min-height: 120px;
             background: #286b32;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        /* CONTROL BUTTONS */
+        .control-button {
+            width: 80px;
+            height: 80px;
+
+            border: none;
+            border-radius: 12px;
+
+            background: #4f5a52;
+
+            color: white;
+            font-size: 35px;
+            font-weight: bold;
+
+            cursor: pointer;
+            user-select: none;
+
+            transition:
+                transform 0.1s,
+                background 0.2s;
+        }
+
+        .control-button:hover {
+            background: #5d6961;
+        }
+
+        .control-button:active {
+            transform: scale(0.92);
         }
 
         /* BOTTOM */
@@ -113,31 +147,6 @@
             min-height: 120px;
             background: #286b32;
             position: relative;
-        }
-
-        /* SHOOT BUTTON */
-        .shoot-button {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-
-            width: 220px;
-            height: 80px;
-
-            border: none;
-            border-radius: 15px;
-
-            background: #4f5a52;
-            cursor: pointer;
-        }
-
-        .shoot-button:hover {
-            background: #5d6961;
-        }
-
-        .shoot-button:active {
-            transform: translate(-50%, -50%) scale(0.95);
         }
 
         /* BACK BUTTON */
@@ -162,7 +171,9 @@
             text-decoration: none;
 
             cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
+            transition:
+                transform 0.2s,
+                background 0.2s;
 
             z-index: 30;
         }
@@ -268,16 +279,35 @@
 
     </div>
 
+
     <!-- CONTROLS -->
     <div class="controls">
 
+        <!-- DOWN -->
+        <button
+            class="control-button"
+            onclick="movePlayer(1)"
+        >
+            ↓
+        </button>
+
         <!-- SHOOT -->
         <button
-            class="shoot-button"
+            class="control-button"
             onclick="shoot()"
-        ></button>
+        >
+        </button>
+
+        <!-- UP -->
+        <button
+            class="control-button"
+            onclick="movePlayer(-1)"
+        >
+            ↑
+        </button>
 
     </div>
+
 
     <!-- BOTTOM -->
     <div class="bottom">
@@ -292,16 +322,30 @@
 
     </div>
 
+
     <script>
 
-        const game = document.getElementById("game");
-        const menu = document.getElementById("menu");
-        const menuTitle = document.getElementById("menuTitle");
-        const startButton = document.getElementById("startButton");
+        const game =
+            document.getElementById("game");
 
-        const killsText = document.getElementById("kills");
-        const streakText = document.getElementById("streak");
-        const player = document.getElementById("player");
+        const menu =
+            document.getElementById("menu");
+
+        const menuTitle =
+            document.getElementById("menuTitle");
+
+        const startButton =
+            document.getElementById("startButton");
+
+        const killsText =
+            document.getElementById("kills");
+
+        const streakText =
+            document.getElementById("streak");
+
+        const player =
+            document.getElementById("player");
+
 
         let enemies = [];
         let bullets = [];
@@ -309,19 +353,62 @@
         let gameStarted = false;
         let enemySpawner = null;
 
+        /* PLAYER Y POSITION */
+        let playerY = 50;
+
+
         /* LOAD PERMANENT KILLS */
         let kills = Number(
-            localStorage.getItem("slimeManMillerKills") || 0
+            localStorage.getItem(
+                "slimeManMillerKills"
+            ) || 0
         );
 
-        /* STREAK STARTS AT 0 */
+
+        /* STREAK */
         let streak = 0;
+
 
         killsText.textContent =
             "KILLS: " + kills;
 
         streakText.textContent =
             "STREAK: " + streak;
+
+
+        /* UPDATE PLAYER */
+        function updatePlayer() {
+
+            playerY =
+                Math.max(
+                    5,
+                    Math.min(
+                        95,
+                        playerY
+                    )
+                );
+
+            player.style.top =
+                playerY + "%";
+        }
+
+
+        /* MOVE PLAYER */
+        function movePlayer(direction) {
+
+            if (!gameStarted) return;
+
+            /*
+                direction:
+                -1 = UP
+                 1 = DOWN
+            */
+
+            playerY +=
+                direction * 8;
+
+            updatePlayer();
+        }
 
 
         /* ADD KILL */
@@ -338,11 +425,13 @@
                 kills
             );
 
+
             /* CURRENT STREAK */
             streak++;
 
             streakText.textContent =
                 "STREAK: " + streak;
+
 
             /* 25+ STREAK */
             if (streak >= 25) {
@@ -381,10 +470,15 @@
 
             clearGame();
 
-            /* RESET STREAK */
             resetStreak();
 
             gameStarted = true;
+
+            /* PLAYER START POSITION */
+            playerY = 50;
+
+            updatePlayer();
+
 
             menu.classList.remove(
                 "game-over"
@@ -394,9 +488,13 @@
                 "hidden"
             );
 
-            enemySpawner = setInterval(() => {
-                createEnemy();
-            }, 1000);
+
+            enemySpawner =
+                setInterval(() => {
+
+                    createEnemy();
+
+                }, 1000);
         }
 
 
@@ -405,26 +503,47 @@
 
             if (!gameStarted) return;
 
+
             const enemy =
                 document.createElement("div");
 
             enemy.classList.add("enemy");
 
-            const centerY =
-                (game.clientHeight / 2) - 25;
+
+            /*
+                RANDOM HEIGHT
+
+                Between 25% and 75%
+                of the game area.
+            */
+
+            const minY = 25;
+            const maxY = 75;
+
+            const randomY =
+                Math.random() *
+                (maxY - minY)
+                + minY;
+
 
             enemy.style.left =
                 game.clientWidth + "px";
 
             enemy.style.top =
-                centerY + "px";
+                randomY + "%";
+
 
             game.appendChild(enemy);
 
+
             enemies.push({
+
                 element: enemy,
+
                 x: game.clientWidth,
-                y: centerY
+
+                y: randomY
+
             });
         }
 
@@ -434,12 +553,20 @@
 
             if (!gameStarted) return;
 
+
             const bullet =
                 document.createElement("div");
 
-            bullet.classList.add("bullet");
+            bullet.classList.add(
+                "bullet"
+            );
 
-            /* 25+ STREAK = RED BULLET */
+
+            /*
+                25+ STREAK
+                = DARK RED BULLET
+            */
+
             if (streak >= 25) {
 
                 bullet.classList.add(
@@ -447,21 +574,32 @@
                 );
             }
 
+
             const playerX =
                 100 + 60;
+
 
             bullet.style.left =
                 playerX + "px";
 
+
             bullet.style.top =
-                (game.clientHeight / 2 - 6) + "px";
+                "calc(" +
+                playerY +
+                "% - 6px)";
+
 
             game.appendChild(bullet);
 
+
             bullets.push({
+
                 element: bullet,
+
                 x: playerX,
-                y: game.clientHeight / 2 - 6
+
+                y: playerY
+
             });
         }
 
@@ -471,23 +609,35 @@
 
             gameStarted = false;
 
-            clearInterval(enemySpawner);
+
+            clearInterval(
+                enemySpawner
+            );
 
             enemySpawner = null;
 
+
             enemies.forEach(enemy => {
+
                 enemy.element.remove();
+
             });
 
+
             bullets.forEach(bullet => {
+
                 bullet.element.remove();
+
             });
+
 
             enemies = [];
             bullets = [];
 
+
             /* RESET STREAK */
             resetStreak();
+
 
             /* SHOW GAME OVER */
             menu.classList.remove(
@@ -498,8 +648,10 @@
                 "game-over"
             );
 
+
             menuTitle.textContent =
                 "GAME OVER";
+
 
             startButton.textContent =
                 "RESTART";
@@ -510,12 +662,18 @@
         function clearGame() {
 
             enemies.forEach(enemy => {
+
                 enemy.element.remove();
+
             });
 
+
             bullets.forEach(bullet => {
+
                 bullet.element.remove();
+
             });
+
 
             enemies = [];
             bullets = [];
@@ -527,23 +685,31 @@
 
             if (gameStarted) {
 
+
                 /* MOVE ENEMIES */
+
                 for (
-                    let i = enemies.length - 1;
+                    let i =
+                        enemies.length - 1;
+
                     i >= 0;
+
                     i--
                 ) {
 
                     const enemy =
                         enemies[i];
 
+
                     enemy.x -= 4;
+
 
                     enemy.element.style.left =
                         enemy.x + "px";
 
 
                     /* PLAYER COLLISION */
+
                     const playerRect =
                         player.getBoundingClientRect();
 
@@ -555,10 +721,13 @@
                     if (
                         playerRect.left <
                             enemyRect.right &&
+
                         playerRect.right >
                             enemyRect.left &&
+
                         playerRect.top <
                             enemyRect.bottom &&
+
                         playerRect.bottom >
                             enemyRect.top
                     ) {
@@ -569,7 +738,8 @@
                     }
 
 
-                    /* REMOVE AT LEFT */
+                    /* REMOVE LEFT */
+
                     if (enemy.x < -60) {
 
                         enemy.element.remove();
@@ -580,16 +750,22 @@
 
 
                 /* MOVE BULLETS */
+
                 for (
-                    let i = bullets.length - 1;
+                    let i =
+                        bullets.length - 1;
+
                     i >= 0;
+
                     i--
                 ) {
 
                     const bullet =
                         bullets[i];
 
+
                     bullet.x += 8;
+
 
                     bullet.element.style.left =
                         bullet.x + "px";
@@ -608,55 +784,87 @@
 
 
                 /* BULLET COLLISIONS */
+
                 for (
-                    let b = bullets.length - 1;
+                    let b =
+                        bullets.length - 1;
+
                     b >= 0;
+
                     b--
                 ) {
 
                     for (
-                        let e = enemies.length - 1;
+                        let e =
+                            enemies.length - 1;
+
                         e >= 0;
+
                         e--
                     ) {
 
                         const bulletRect =
-                            bullets[b].element
+                            bullets[b]
+                                .element
                                 .getBoundingClientRect();
 
+
                         const enemyRect =
-                            enemies[e].element
+                            enemies[e]
+                                .element
                                 .getBoundingClientRect();
 
 
                         if (
                             bulletRect.left <
                                 enemyRect.right &&
+
                             bulletRect.right >
                                 enemyRect.left &&
+
                             bulletRect.top <
                                 enemyRect.bottom &&
+
                             bulletRect.bottom >
                                 enemyRect.top
                         ) {
 
+
                             /* REMOVE ENEMY */
-                            enemies[e].element.remove();
+
+                            enemies[e]
+                                .element
+                                .remove();
+
 
                             /* REMOVE BULLET */
-                            bullets[b].element.remove();
 
-                            enemies.splice(e, 1);
-                            bullets.splice(b, 1);
+                            bullets[b]
+                                .element
+                                .remove();
 
-                            /* KILL +1 / STREAK +1 */
+
+                            enemies.splice(
+                                e,
+                                1
+                            );
+
+                            bullets.splice(
+                                b,
+                                1
+                            );
+
+
+                            /* KILL +1 */
                             addKill();
+
 
                             break;
                         }
                     }
                 }
             }
+
 
             requestAnimationFrame(
                 gameLoop
